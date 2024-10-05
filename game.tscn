@@ -1,0 +1,44 @@
+[gd_scene load_steps=9 format=3 uid="uid://b0fy4doifqk7s"]
+
+[ext_resource type="Script" path="res://game.gd" id="1_cc2qk"]
+[ext_resource type="PackedScene" uid="uid://dd5r65nviv8nj" path="res://Components/Player/player.tscn" id="1_lenhx"]
+[ext_resource type="Resource" uid="uid://b3toa2xgpms0d" path="res://Components/Player/Resources/platformer_body.tres" id="2_mf2of"]
+[ext_resource type="Script" path="res://Components/Player/behavior_character.gd" id="2_qyp5h"]
+[ext_resource type="Script" path="res://Components/Player/Resources/behavior_resource.gd" id="3_s4iir"]
+[ext_resource type="Resource" uid="uid://dt0svdk2vfnfe" path="res://Components/Player/Resources/platformer_walking.tres" id="4_o4ohe"]
+[ext_resource type="Resource" uid="uid://bol8nbc0qs1dd" path="res://Components/Player/Resources/platformer_jumping.tres" id="5_jihby"]
+[ext_resource type="PackedScene" uid="uid://dsour1luye00u" path="res://Components/Arena/arena.tscn" id="7_ujggt"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_cc2qk")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.22, 0.22)
+
+[node name="Player" parent="." instance=ExtResource("1_lenhx")]
+position = Vector2(-252, -157)
+rotation = 0.00755271
+script = ExtResource("2_qyp5h")
+behaviors = Array[ExtResource("3_s4iir")]([ExtResource("4_o4ohe"), ExtResource("2_mf2of"), ExtResource("5_jihby")])
+
+[node name="Arena" parent="." instance=ExtResource("7_ujggt")]
+
+[node name="Debug" type="Node2D" parent="."]
+
+[node name="Velocity" type="Label" parent="Debug"]
+offset_left = -1606.0
+offset_top = -1363.0
+offset_right = -1145.0
+offset_bottom = -1226.0
+theme_override_font_sizes/font_size = 100
+text = "VELOCITY
+"
+
+[node name="Grounded" type="Label" parent="Debug"]
+offset_left = -1606.0
+offset_top = -1190.0
+offset_right = -1145.0
+offset_bottom = -1053.0
+theme_override_font_sizes/font_size = 100
+text = "VELOCITY
+"
