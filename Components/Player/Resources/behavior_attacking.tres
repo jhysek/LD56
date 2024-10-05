@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="BehaviorAttacking" load_steps=2 format=3 uid="uid://chrj5ma4wwtt1"]
+
+[ext_resource type="Script" path="res://Components/Player/Resources/behavior_attacking.gd" id="1_m4g47"]
+
+[resource]
+script = ExtResource("1_m4g47")
+enabled = true

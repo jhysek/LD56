@@ -73,6 +73,7 @@ func disable_behavior(resource_name):
 	if behavior:
 		behavior.disable
 
-func animate(anim_name):
-	if anim.current_animation != anim_name:
+func animate(anim_name, force = false):
+	if anim.current_animation != anim_name or force:
+		print("SWITCHING TO ANIMATION: " + anim_name)
 		anim.play(anim_name)

@@ -23,15 +23,18 @@ func on_physics_process(delta):
 		var left_vector = character.gravity_normalized.rotated(-PI/2)
 		direction += left_vector
 		character.partial_velocities.walking += left_vector * WALK_SPEED * delta * dumping
-		character.animate('WalkLeft')
+		if character.grounded:
+			character.animate('WalkLeft')
 
 	if Input.is_action_pressed("ui_right"):
 		moving = true
 		var right_vector = character.gravity_normalized.rotated(PI/2)
 		direction += right_vector
 		character.partial_velocities.walking += right_vector * WALK_SPEED * delta * dumping
-		character.animate('WalkRight')
+		if character.grounded:
+			character.animate('WalkRight')
 
 	if !moving:
 		character.partial_velocities.walking = Vector2.ZERO
-		character.animate('Idle')
+		if character.grounded:
+			character.animate('Idle')

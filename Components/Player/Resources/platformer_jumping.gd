@@ -50,9 +50,8 @@ func on_physics_process(delta):
 
 		jump_timeout = 0
 
+		character.animate("Jump", true)
 		Debug.jump =  character.gravity_normalized * jump_speed
-		print("NORM: ", character.gravity_normalized)
-		print("JUMP SPEED: ", jump_speed)
 
 		character.partial_velocities.jumping = character.gravity_normalized * jump_speed
 		character.partial_velocities.gravity = Vector2.ZERO
