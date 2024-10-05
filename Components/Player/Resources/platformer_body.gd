@@ -3,6 +3,7 @@ extends BehaviorResource
 
 @export var GRAVITY_FORCE = 70 * 70;
 
+var gravity_attractor = null
 var center_of_gravity = Vector2(0, 0)
 var gravity_direction = -1
 var gravity_angle
@@ -20,16 +21,36 @@ func on_physics_process(delta):
 	lerp_rotation()
 
 func calculate_and_apply_gravity(delta):
+	if gravity_attractor:
+		center_of_gravity = gravity_attractor.global_position
 	gravity_angle = character.position.angle_to_point(center_of_gravity)
 	gravity_vector = Vector2(cos(gravity_angle), sin(gravity_angle))
 
 	character.gravity_normalized = gravity_vector
-	Debug.gravity = gravity_vector * delta * GRAVITY_FORCE * gravity_direction
+	#Debug.gravity = gravity_vector * delta * GRAVITY_FORCE * gravity_direction
 
 	character.partial_velocities.gravity = gravity_vector * delta * GRAVITY_FORCE * gravity_direction
 
 # bottom of the character is rotated towards gravity
 func lerp_rotation():
-	character.up_direction = gravity_vector
 	character.look_at(center_of_gravity)
-	character.rotation += PI / 2
+	if gravity_direction == -1:
+		character.rotation += PI / 2
+		character.up_direction = gravity_vector
+	else:
+		character.rotation -= PI / 2
+		character.up_direction = gravity_vector.rotated(PI)
+
+func unlock_gravity():
+	gravity_attractor = null
+	center_of_gravity = Vector2.ZERO
+	gravity_direction = -1
+	character.gravity_direction = -1
+	character.speed_damping = 1
+
+func lock_gravity_to(node: Node2D):
+	gravity_attractor = node
+	center_of_gravity = node.global_position
+	gravity_direction = 1
+	character.gravity_direction = 1
+	character.speed_damping = node.SPEED_DAMPING

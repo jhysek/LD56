@@ -12,11 +12,15 @@ enum State {
 
 @export var behaviors: Array[BehaviorResource];
 @export var state: State = State.IDLE;
+@export var game: Node2D
 @onready var anim = $AnimationPlayer
+
 
 var gravity_normalized: Vector2
 var grounded: bool = false
 var gravity_velocity = Vector2.ZERO
+var speed_damping = 1
+var gravity_direction = -1
 
 var partial_velocities = {
 	gravity = Vector2(0,0),
@@ -25,6 +29,8 @@ var partial_velocities = {
 }
 
 func _ready():
+	if !game:
+		game = get_node("/root/Game")
 	for_each_behavior("on_ready", self)
 
 func _process(delta):
@@ -34,7 +40,12 @@ func _process(delta):
 func _physics_process(delta):
 	for_each_behavior("on_physics_process", delta)
 
-	velocity += partial_velocities.gravity
+	if state == State.STATIC:
+		return
+
+	if !grounded:
+		velocity += partial_velocities.gravity
+
 	velocity += partial_velocities.jumping
 
 	if grounded:
@@ -75,5 +86,4 @@ func disable_behavior(resource_name):
 
 func animate(anim_name, force = false):
 	if anim.current_animation != anim_name or force:
-		print("SWITCHING TO ANIMATION: " + anim_name)
 		anim.play(anim_name)

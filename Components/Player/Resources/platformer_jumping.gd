@@ -39,6 +39,7 @@ func on_physics_process(delta):
 		if in_air and DOUBLE_JUMP and !FLAPPY_BIRD:
 			double_jumped = true
 			jump_speed = DOUBLE_JUMP_SPEED
+			character.boost()
 			emit_signal("on_double_jumped")
 		else:
 			in_air = true
@@ -53,7 +54,7 @@ func on_physics_process(delta):
 		character.animate("Jump", true)
 		Debug.jump =  character.gravity_normalized * jump_speed
 
-		character.partial_velocities.jumping = character.gravity_normalized * jump_speed
+		character.partial_velocities.jumping = character.gravity_normalized * jump_speed * character.gravity_direction * -1
 		character.partial_velocities.gravity = Vector2.ZERO
 
 

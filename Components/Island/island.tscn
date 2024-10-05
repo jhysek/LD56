@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://uc8pcapv6hre"]
+
+[ext_resource type="Script" path="res://Components/Island/island.gd" id="1_ao31q"]
+[ext_resource type="Texture2D" uid="uid://bon5q5u0xhdfb" path="res://shape.png" id="1_rdkfj"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_cjpie"]
+rough = true
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4agvn"]
+radius = 383.96
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gmg6u"]
+radius = 204.377
+
+[node name="Island" type="StaticBody2D"]
+position = Vector2(275, 241)
+collision_layer = 15
+collision_mask = 15
+physics_material_override = SubResource("PhysicsMaterial_cjpie")
+script = ExtResource("1_ao31q")
+
+[node name="GravityArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+input_pickable = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GravityArea"]
+shape = SubResource("CircleShape2D_4agvn")
+debug_color = Color(0.319543, 0.601031, 0.489484, 0.42)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_gmg6u")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("1_rdkfj")
+
+[connection signal="body_entered" from="GravityArea" to="." method="_on_gravity_area_body_entered"]
+[connection signal="body_exited" from="GravityArea" to="." method="_on_gravity_area_body_exited"]

@@ -22,7 +22,7 @@ func on_physics_process(delta):
 		moving = true
 		var left_vector = character.gravity_normalized.rotated(-PI/2)
 		direction += left_vector
-		character.partial_velocities.walking += left_vector * WALK_SPEED * delta * dumping
+		character.partial_velocities.walking += left_vector * WALK_SPEED * delta * dumping * character.speed_damping
 		if character.grounded:
 			character.animate('WalkLeft')
 
@@ -30,7 +30,7 @@ func on_physics_process(delta):
 		moving = true
 		var right_vector = character.gravity_normalized.rotated(PI/2)
 		direction += right_vector
-		character.partial_velocities.walking += right_vector * WALK_SPEED * delta * dumping
+		character.partial_velocities.walking += right_vector * WALK_SPEED * delta * dumping * character.speed_damping
 		if character.grounded:
 			character.animate('WalkRight')
 

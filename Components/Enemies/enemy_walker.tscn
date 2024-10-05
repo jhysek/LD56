@@ -1,0 +1,32 @@
+[gd_scene load_steps=7 format=3 uid="uid://cw1n70g6sm5xn"]
+
+[ext_resource type="PackedScene" uid="uid://dd5r65nviv8nj" path="res://Components/Player/player.tscn" id="1_db0pw"]
+[ext_resource type="Script" path="res://Components/Player/Resources/behavior_resource.gd" id="2_oyml4"]
+[ext_resource type="Script" path="res://Components/Player/Resources/platformer_body.gd" id="3_8801a"]
+[ext_resource type="Script" path="res://Components/Player/Resources/enemy_walking.gd" id="4_udioe"]
+
+[sub_resource type="Resource" id="Resource_aqmpw"]
+resource_local_to_scene = true
+resource_name = "body"
+script = ExtResource("3_8801a")
+GRAVITY_FORCE = 4900
+enabled = true
+
+[sub_resource type="Resource" id="Resource_5nbsw"]
+resource_local_to_scene = true
+resource_name = "walking"
+script = ExtResource("4_udioe")
+WALK_SPEED = 50000
+should_walk_left = true
+enabled = true
+
+[node name="EnemyWalker" groups=["Enemy"] instance=ExtResource("1_db0pw")]
+scale = Vector2(0.5, 0.5)
+behaviors = Array[ExtResource("2_oyml4")]([SubResource("Resource_aqmpw"), SubResource("Resource_5nbsw")])
+
+[node name="WeaponArea" parent="Visual/Body/Weapon/Bottom" index="0"]
+position = Vector2(-9.8816, 76.3895)
+
+[node name="CollisionShape2D" parent="Visual/Body/Weapon/Bottom/WeaponArea" index="0"]
+position = Vector2(37.3848, 81.9099)
+scale = Vector2(1, 1)

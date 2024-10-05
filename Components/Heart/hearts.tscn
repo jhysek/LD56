@@ -1,0 +1,86 @@
+[gd_scene load_steps=7 format=3 uid="uid://bxkr3a8x7g83p"]
+
+[ext_resource type="Script" path="res://Components/Heart/hearts.gd" id="1_npjos"]
+[ext_resource type="Texture2D" uid="uid://cyxp0o7nqsesp" path="res://Components/Heart/heart.png" id="1_oeh7h"]
+[ext_resource type="Theme" uid="uid://2y38oas4fgvb" path="res://Assets/theme.tres" id="2_j72hr"]
+
+[sub_resource type="Animation" id="Animation_6wtia"]
+resource_name = "Change"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Container:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.9),
+"transitions": PackedFloat32Array(0.307786, 1, 0.307786),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.5, 1.5), Vector2(1, 1)]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"update_value"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_joqqh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Container:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qatyg"]
+_data = {
+"Change": SubResource("Animation_6wtia"),
+"RESET": SubResource("Animation_joqqh")
+}
+
+[node name="Hearts" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 325.0
+offset_bottom = 91.0
+script = ExtResource("1_npjos")
+
+[node name="Container" type="Node2D" parent="."]
+position = Vector2(53, 42)
+
+[node name="Heart" type="Sprite2D" parent="Container"]
+position = Vector2(25.3636, 2.63637)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("1_oeh7h")
+
+[node name="Label" type="Label" parent="Container"]
+offset_left = -63.6364
+offset_top = -16.3636
+offset_right = -6.63636
+offset_bottom = 30.6364
+pivot_offset = Vector2(54.3636, 18.4545)
+theme = ExtResource("2_j72hr")
+theme_override_font_sizes/font_size = 30
+text = "1"
+horizontal_alignment = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_qatyg")
+}

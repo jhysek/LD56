@@ -1,21 +1,70 @@
-[gd_scene load_steps=3 format=3 uid="uid://dsour1luye00u"]
+[gd_scene load_steps=9 format=3 uid="uid://dsour1luye00u"]
 
-[ext_resource type="Texture2D" uid="uid://cffbs0ucgyc35" path="res://icon.svg" id="1_5gd40"]
+[ext_resource type="Script" path="res://Components/Arena/arena.gd" id="1_heccx"]
+[ext_resource type="Texture2D" uid="uid://c5p75vs13nxta" path="res://Assets/portal.png" id="2_4848d"]
 [ext_resource type="Texture2D" uid="uid://bon5q5u0xhdfb" path="res://shape.png" id="2_ujsoi"]
+[ext_resource type="Texture2D" uid="uid://b8t4brxv1xj6x" path="res://Assets/bg.png" id="2_wh70e"]
+[ext_resource type="PackedScene" uid="uid://uc8pcapv6hre" path="res://Components/Island/island.tscn" id="4_uasy4"]
+[ext_resource type="Texture2D" uid="uid://bxxajreu48ji7" path="res://Assets/light.png" id="5_b2wu2"]
+[ext_resource type="Texture2D" uid="uid://dq8o2osjsprl2" path="res://shape_full.png" id="5_f2la6"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_phjce"]
+rough = true
 
 [node name="Arena" type="Node2D"]
+script = ExtResource("1_heccx")
+
+[node name="Bg" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(126.5, 10)
+scale = Vector2(3.081, 2.776)
+texture = ExtResource("2_wh70e")
 
 [node name="Center" type="Sprite2D" parent="."]
-visible = false
-texture = ExtResource("1_5gd40")
+modulate = Color(0.0449894, 0.0449894, 0.0449894, 0.917647)
+texture = ExtResource("2_4848d")
+
+[node name="Spawner" type="Marker2D" parent="Center"]
+position = Vector2(0, -48)
 
 [node name="Border" type="StaticBody2D" parent="."]
+collision_layer = 15
+collision_mask = 15
+physics_material_override = SubResource("PhysicsMaterial_phjce")
 
 [node name="Sprite" type="Sprite2D" parent="Border"]
-modulate = Color(0.17, 0.17, 0.17, 1)
+modulate = Color(0.305868, 0.305868, 0.305868, 1)
 scale = Vector2(4, 4)
 texture = ExtResource("2_ujsoi")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Border"]
-position = Vector2(-1, -5)
+position = Vector2(-11, -18)
+scale = Vector2(1.013, 1)
 polygon = PackedVector2Array(944, 5, 929, -199, 860, -392, 763, -563, 647, -690, 451, -833, 269, -907, 63, -944, -141, -937, -367, -871, -556, -765, -744, -581, -863, -386, -942, -123, -947, 93, -883, 336, -786, 527, -659, 679, -526, 787, -347, 879, -156, 935, 74, 950, 310, 900, 505, 798, 695, 647, 808, 494, 892, 326, 936, 167, 944, 5, 990, -1, 1208, 3, 813, 909, -332, 1197, -1244, 208, -746, -1030, 910, -1054, 1204, -42)
+
+[node name="Inner" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.247059)
+scale = Vector2(3.3, 3.3)
+texture = ExtResource("5_f2la6")
+
+[node name="Island" parent="." instance=ExtResource("4_uasy4")]
+scale = Vector2(0.6, 0.6)
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(-441, -393)
+color = Color(0, 1, 1, 1)
+energy = 2.0
+texture = ExtResource("5_b2wu2")
+texture_scale = 1.5
+
+[node name="PointLight2D2" type="PointLight2D" parent="."]
+position = Vector2(553, 493)
+color = Color(1, 0, 1, 1)
+energy = 2.0
+texture = ExtResource("5_b2wu2")
+texture_scale = 1.5
+
+[node name="PointLight2D3" type="PointLight2D" parent="."]
+energy = 3.0
+texture = ExtResource("5_b2wu2")
+texture_scale = 2.5
