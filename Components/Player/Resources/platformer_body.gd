@@ -32,4 +32,4 @@ func calculate_and_apply_gravity(delta):
 func lerp_rotation():
 	character.up_direction = gravity_vector
 	character.look_at(center_of_gravity)
-	character.rotation -= PI/2
+	character.rotation += PI / 2

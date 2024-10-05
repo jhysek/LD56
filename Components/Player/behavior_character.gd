@@ -12,6 +12,7 @@ enum State {
 
 @export var behaviors: Array[BehaviorResource];
 @export var state: State = State.IDLE;
+@onready var anim = $AnimationPlayer
 
 var gravity_normalized: Vector2
 var grounded: bool = false
@@ -35,7 +36,6 @@ func _physics_process(delta):
 
 	velocity += partial_velocities.gravity
 	velocity += partial_velocities.jumping
-	#velocity += partial_velocities.walking
 
 	if grounded:
 		if partial_velocities.walking == Vector2.ZERO:
@@ -72,3 +72,7 @@ func disable_behavior(resource_name):
 	var behavior = get_behavior_by_name(resource_name)
 	if behavior:
 		behavior.disable
+
+func animate(anim_name):
+	if anim.current_animation != anim_name:
+		anim.play(anim_name)

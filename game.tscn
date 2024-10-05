@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b0fy4doifqk7s"]
+[gd_scene load_steps=10 format=3 uid="uid://b0fy4doifqk7s"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_cc2qk"]
 [ext_resource type="PackedScene" uid="uid://dd5r65nviv8nj" path="res://Components/Player/player.tscn" id="1_lenhx"]
@@ -6,8 +6,17 @@
 [ext_resource type="Script" path="res://Components/Player/behavior_character.gd" id="2_qyp5h"]
 [ext_resource type="Script" path="res://Components/Player/Resources/behavior_resource.gd" id="3_s4iir"]
 [ext_resource type="Resource" uid="uid://dt0svdk2vfnfe" path="res://Components/Player/Resources/platformer_walking.tres" id="4_o4ohe"]
-[ext_resource type="Resource" uid="uid://bol8nbc0qs1dd" path="res://Components/Player/Resources/platformer_jumping.tres" id="5_jihby"]
+[ext_resource type="Script" path="res://Components/Player/Resources/platformer_jumping.gd" id="7_3d5ei"]
 [ext_resource type="PackedScene" uid="uid://dsour1luye00u" path="res://Components/Arena/arena.tscn" id="7_ujggt"]
+
+[sub_resource type="Resource" id="Resource_pshei"]
+resource_local_to_scene = true
+resource_name = "jump"
+script = ExtResource("7_3d5ei")
+JUMP_SPEED = 2000
+DOUBLE_JUMP_SPEED = 3000
+DOUBLE_JUMP = true
+enabled = true
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_cc2qk")
@@ -19,11 +28,12 @@ zoom = Vector2(0.22, 0.22)
 position = Vector2(-252, -157)
 rotation = 0.00755271
 script = ExtResource("2_qyp5h")
-behaviors = Array[ExtResource("3_s4iir")]([ExtResource("4_o4ohe"), ExtResource("2_mf2of"), ExtResource("5_jihby")])
+behaviors = Array[ExtResource("3_s4iir")]([ExtResource("4_o4ohe"), ExtResource("2_mf2of"), SubResource("Resource_pshei")])
 
 [node name="Arena" parent="." instance=ExtResource("7_ujggt")]
 
 [node name="Debug" type="Node2D" parent="."]
+visible = false
 
 [node name="Velocity" type="Label" parent="Debug"]
 offset_left = -1606.0
