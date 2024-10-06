@@ -21,6 +21,7 @@ var grounded: bool = false
 var gravity_velocity = Vector2.ZERO
 var speed_damping = 1
 var gravity_direction = -1
+var direction = 1
 
 var partial_velocities = {
 	gravity = Vector2(0,0),

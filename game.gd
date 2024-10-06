@@ -11,7 +11,7 @@ var WAVES = [
 	{
 		wait_time = 1,
 		enemies = [
-			EnemyWalker
+			#EnemyWalker
 		]
 	},
 	{

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="EnemyJumping" load_steps=2 format=3 uid="uid://bs8a1t3uiwxh0"]
+
+[ext_resource type="Script" path="res://Components/Player/Resources/enemy_jumping.gd" id="1_enret"]
+
+[resource]
+script = ExtResource("1_enret")
+delay = 5000
+jump_speed = 3000
+enabled = true

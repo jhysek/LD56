@@ -17,6 +17,9 @@ func on_physics_process(delta):
 	character.grounded = character.is_on_floor()
 	character.partial_velocities.walking = Vector2.ZERO
 
+	if !character.grounded:
+		return
+
 	if should_walk_left:
 		walk_left(delta)
 	else:
@@ -29,12 +32,21 @@ func on_physics_process(delta):
 
 func walk_left(delta):
 	moving = true
+	character.direction  = 1
 	var left_vector = character.gravity_normalized.rotated(-PI/2)
 	character.partial_velocities.walking += left_vector * WALK_SPEED * delta
-	character.animate('WalkLeft')
+	if character.gravity_direction == -1:
+		character.animate('WalkLeft')
+	else:
+		character.animate('WalkRight')
+
 
 func walk_right(delta):
 	moving = true
+	character.direction = -1
 	var right_vector = character.gravity_normalized.rotated(PI/2)
 	character.partial_velocities.walking += right_vector * WALK_SPEED * delta
-	character.animate('WalkRight')
+	if character.gravity_direction == 1:
+		character.animate('WalkLeft')
+	else:
+		character.animate('WalkRight')

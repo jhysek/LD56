@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://b0fy4doifqk7s"]
+[gd_scene load_steps=33 format=3 uid="uid://b0fy4doifqk7s"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_cc2qk"]
 [ext_resource type="PackedScene" uid="uid://dd5r65nviv8nj" path="res://Components/Player/player.tscn" id="1_lenhx"]
@@ -12,9 +12,12 @@
 [ext_resource type="Script" path="res://Components/Player/Resources/platformer_walking.gd" id="8_2rm7u"]
 [ext_resource type="Script" path="res://Components/Player/Resources/behavior_shooting.gd" id="8_6h6pf"]
 [ext_resource type="Script" path="res://Components/Player/Resources/behavior_attacking.gd" id="8_vw1xm"]
+[ext_resource type="PackedScene" uid="uid://cw1n70g6sm5xn" path="res://Components/Enemies/enemy_walker.tscn" id="10_gt1qp"]
 [ext_resource type="Script" path="res://Components/Player/Resources/platformer_body.gd" id="10_vcx2w"]
+[ext_resource type="Script" path="res://Components/Player/Resources/enemy_walking.gd" id="11_p5b7s"]
 [ext_resource type="Theme" uid="uid://br3smno0fpler" path="res://Assets/theme.tres" id="12_m161q"]
 [ext_resource type="PackedScene" uid="uid://sojhanv8dusj" path="res://Components/WorldEnvironment/world_environment.tscn" id="13_4usww"]
+[ext_resource type="Script" path="res://Components/Player/Resources/enemy_jumping.gd" id="18_0lk2f"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jwp14"]
 blend_mode = 3
@@ -25,7 +28,7 @@ script = ExtResource("10_vcx2w")
 GRAVITY_FORCE = 4900
 enabled = true
 
-[sub_resource type="Resource" id="Resource_b0gpf"]
+[sub_resource type="Resource" id="Resource_10m8f"]
 resource_local_to_scene = true
 resource_name = "jump"
 script = ExtResource("7_3d5ei")
@@ -34,14 +37,14 @@ DOUBLE_JUMP_SPEED = 3000
 DOUBLE_JUMP = true
 enabled = true
 
-[sub_resource type="Resource" id="Resource_bmdfb"]
+[sub_resource type="Resource" id="Resource_3kjgi"]
 resource_local_to_scene = true
 resource_name = "walk"
 script = ExtResource("8_2rm7u")
 WALK_SPEED = 50000
 enabled = true
 
-[sub_resource type="Resource" id="Resource_80yrn"]
+[sub_resource type="Resource" id="Resource_ipm0e"]
 resource_local_to_scene = true
 resource_name = "attack"
 script = ExtResource("8_vw1xm")
@@ -50,6 +53,7 @@ enabled = false
 [sub_resource type="Resource" id="Resource_8b8kd"]
 resource_name = "shoot"
 script = ExtResource("8_6h6pf")
+SHOOTING_UP = false
 enabled = true
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pbbbo"]
@@ -96,6 +100,28 @@ shader_parameter/density = 0.068
 shader_parameter/speed = Vector2(0, 0.2)
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_n6e4x")
 
+[sub_resource type="Resource" id="Resource_d5w7g"]
+resource_local_to_scene = true
+resource_name = "body"
+script = ExtResource("10_vcx2w")
+GRAVITY_FORCE = 4900
+enabled = true
+
+[sub_resource type="Resource" id="Resource_vjqls"]
+resource_local_to_scene = true
+resource_name = "walking"
+script = ExtResource("11_p5b7s")
+WALK_SPEED = 50000
+should_walk_left = true
+enabled = true
+
+[sub_resource type="Resource" id="Resource_vhdl0"]
+resource_name = "jump"
+script = ExtResource("18_0lk2f")
+delay = 3
+jump_speed = 3000
+enabled = true
+
 [node name="Game" type="Node2D"]
 script = ExtResource("1_cc2qk")
 
@@ -137,7 +163,7 @@ game = NodePath("..")
 position = Vector2(282, -107)
 rotation = 0.00755271
 scale = Vector2(0.4, 0.4)
-behaviors = Array[ExtResource("3_s4iir")]([SubResource("Resource_rqud0"), SubResource("Resource_b0gpf"), SubResource("Resource_bmdfb"), SubResource("Resource_80yrn"), SubResource("Resource_8b8kd")])
+behaviors = Array[ExtResource("3_s4iir")]([SubResource("Resource_rqud0"), SubResource("Resource_10m8f"), SubResource("Resource_3kjgi"), SubResource("Resource_ipm0e"), SubResource("Resource_8b8kd")])
 game = NodePath("..")
 
 [node name="JumpAttackWeapon" type="Area2D" parent="Player"]
@@ -199,6 +225,11 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Vignette" parent="Screen" instance=ExtResource("3_u1d3h")]
+
+[node name="EnemyWalker" parent="." instance=ExtResource("10_gt1qp")]
+position = Vector2(-742, -8)
+is_enemy = true
+behaviors = Array[ExtResource("3_s4iir")]([SubResource("Resource_d5w7g"), SubResource("Resource_vjqls"), SubResource("Resource_vhdl0")])
 
 [connection signal="body_entered" from="Player/JumpAttackWeapon" to="Player" method="_on_jump_attack_weapon_body_entered"]
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timeout"]

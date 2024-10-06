@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="EnemyShooting" load_steps=2 format=3 uid="uid://b2oypslc1k8s5"]
+
+[ext_resource type="Script" path="res://Components/Player/Resources/enemy_shooting.gd" id="1_flx1e"]
+
+[resource]
+script = ExtResource("1_flx1e")
+SHOOTING_UP = true
+delay = 3
+enabled = true

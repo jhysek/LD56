@@ -32,15 +32,15 @@ collision_layer = 15
 collision_mask = 15
 physics_material_override = SubResource("PhysicsMaterial_phjce")
 
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Border"]
+position = Vector2(3, 1)
+scale = Vector2(1.013, 1)
+polygon = PackedVector2Array(944, 5, 929, -199, 860, -392, 763, -563, 647, -690, 451, -833, 269, -907, 63, -944, -141, -937, -367, -871, -556, -765, -744, -581, -863, -386, -942, -123, -947, 93, -883, 336, -786, 527, -659, 679, -526, 787, -347, 879, -156, 935, 74, 950, 310, 900, 505, 798, 695, 647, 808, 494, 892, 326, 936, 167, 944, 5, 990, -1, 1208, 3, 813, 909, -332, 1197, -1244, 208, -746, -1030, 910, -1054, 1204, -42)
+
 [node name="Sprite" type="Sprite2D" parent="Border"]
 modulate = Color(0.305868, 0.305868, 0.305868, 1)
 scale = Vector2(4, 4)
 texture = ExtResource("2_ujsoi")
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Border"]
-position = Vector2(-11, -18)
-scale = Vector2(1.013, 1)
-polygon = PackedVector2Array(944, 5, 929, -199, 860, -392, 763, -563, 647, -690, 451, -833, 269, -907, 63, -944, -141, -937, -367, -871, -556, -765, -744, -581, -863, -386, -942, -123, -947, 93, -883, 336, -786, 527, -659, 679, -526, 787, -347, 879, -156, 935, 74, 950, 310, 900, 505, 798, 695, 647, 808, 494, 892, 326, 936, 167, 944, 5, 990, -1, 1208, 3, 813, 909, -332, 1197, -1244, 208, -746, -1030, 910, -1054, 1204, -42)
 
 [node name="Inner" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.247059)
@@ -48,7 +48,8 @@ scale = Vector2(3.3, 3.3)
 texture = ExtResource("5_f2la6")
 
 [node name="Island" parent="." instance=ExtResource("4_uasy4")]
-scale = Vector2(0.6, 0.6)
+position = Vector2(0, 0)
+scale = Vector2(1.5, 1.5)
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
 position = Vector2(-441, -393)

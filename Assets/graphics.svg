@@ -24,14 +24,14 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="4.5550085"
-     inkscape:cx="92.425734"
-     inkscape:cy="595.05927"
-     inkscape:window-width="1210"
-     inkscape:window-height="688"
-     inkscape:window-x="491"
-     inkscape:window-y="1252"
-     inkscape:window-maximized="0"
+     inkscape:zoom="26.301187"
+     inkscape:cx="23.135838"
+     inkscape:cy="608.83183"
+     inkscape:window-width="1397"
+     inkscape:window-height="847"
+     inkscape:window-x="304"
+     inkscape:window-y="1105"
+     inkscape:window-maximized="1"
      inkscape:current-layer="layer1" />
   <defs
      id="defs2" />
@@ -615,5 +615,40 @@
        d="m 20.054276,157.77676 1.11816,-0.55182 c 0,0 0.638321,-0.25204 0.972944,-0.31948 0.295153,-0.0595 0.900337,-0.0726 0.900337,-0.0726 0,0 -0.468984,0.21287 -0.624427,0.4066 -0.129412,0.16129 -0.2196,0.37408 -0.217823,0.58086 0.0017,0.19774 0.09944,0.39341 0.217823,0.55182 0.117667,0.15745 0.46469,0.36304 0.46469,0.36304 0,0 -0.6266,-0.0154 -0.92938,-0.0871 -0.389249,-0.0922 -0.756135,-0.26552 -1.11816,-0.43565 -0.270626,-0.12718 -0.784164,-0.43567 -0.784164,-0.43567 z"
        id="path23713"
        sodipodi:nodetypes="ccacaaacaac" />
+    <path
+       sodipodi:type="star"
+       style="fill:#000000;fill-opacity:0.840669;fill-rule:evenodd;stroke:none;stroke-width:0.865;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       id="path24046"
+       inkscape:flatsided="false"
+       sodipodi:sides="6"
+       sodipodi:cx="11.964605"
+       sodipodi:cy="162.4935"
+       sodipodi:r1="0.80063665"
+       sodipodi:r2="0.52827628"
+       sodipodi:arg1="1.7171116"
+       sodipodi:arg2="1.91023"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m 11.847877,163.28558 -0.05916,-0.29395 -0.568436,-0.20318 0.224984,-0.19821 -0.108256,-0.59387 0.284148,0.0957 0.460179,-0.39069 0.05916,0.29395 0.568435,0.20318 -0.224984,0.19821 0.108256,0.59387 -0.284147,-0.0957 z"
+       inkscape:transform-center-x="0.030044388"
+       inkscape:transform-center-y="0.030144814"
+       transform="translate(-2.7514423,-1.8426326)"
+       inkscape:export-filename="../Components/Bullet/bullet.png"
+       inkscape:export-xdpi="1364.9908"
+       inkscape:export-ydpi="1364.9908" />
+    <ellipse
+       style="fill:#fff8f8;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.865;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+       id="path24100"
+       cx="9.2131624"
+       cy="160.67172"
+       rx="0.28348196"
+       ry="0.26263767" />
+    <path
+       style="fill:#ffffff;fill-opacity:0.84066892;stroke:#000000;stroke-width:0.265;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       d="m 5.6486799,160.05311 -0.4412743,0.69893 0.8447341,-7.6e-4 z"
+       id="path24643"
+       inkscape:export-filename="../Components/Bullet/explosive.png"
+       inkscape:export-xdpi="1364.9908"
+       inkscape:export-ydpi="1364.9908" />
   </g>
 </svg>

@@ -1,9 +1,11 @@
-class_name BehaviorShooting
+class_name EnemyShooting
 extends BehaviorResource
 
-@export var SHOOTING_UP = false
-
+@export var SHOOTING_UP = true
 var Bullet = load("res://Components/Bullet/bullet.tscn")
+
+@export var delay = 3
+var cooldown = delay
 
 func on_ready(parent):
 	character = parent
@@ -12,7 +14,13 @@ func on_physics_process(delta):
 	if !enabled:
 		return
 
-	if Input.is_action_just_pressed("ui_attack"):
+	character.grounded = character.is_on_floor()
+	character.partial_velocities.jumping = Vector2.ZERO
+
+	if cooldown > 0:
+		cooldown -= delta
+	else:
+		cooldown = delay
 		fire()
 
 func fire():
@@ -20,9 +28,7 @@ func fire():
 	character.game.add_child(bullet)
 	bullet.position = character.global_position
 	if character.gravity_direction == -1:
-		#bullet.fire(character.gravity_normalized)
-
-				# Fire UP
+		# Fire UP
 		if SHOOTING_UP:
 			bullet.bounces = 5
 			bullet.fire(character.gravity_normalized * -1)
