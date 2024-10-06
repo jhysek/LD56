@@ -23,6 +23,7 @@ func on_physics_process(delta):
 
 	var grounded = character.is_on_floor()
 	Debug.grounded = grounded
+
 	character.grounded = grounded
 	var jump_speed = JUMP_SPEED
 
@@ -33,6 +34,7 @@ func on_physics_process(delta):
 	_handle_coyote_time(delta, grounded)
 
 	if (grounded or !double_jumped) and Input.is_action_just_pressed("ui_jump"):
+		character.stop_audio('Run')
 		character.grounded = false
 		Debug.grounded = false
 
@@ -45,6 +47,7 @@ func on_physics_process(delta):
 			character.boost()
 			emit_signal("on_double_jumped")
 		else:
+			character.play_audio('Jump')
 			in_air = true
 			double_jumped = false
 			if FLAPPY_BIRD:

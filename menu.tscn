@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cnpplfigbk2iw"]
+[gd_scene load_steps=21 format=3 uid="uid://cnpplfigbk2iw"]
 
 [ext_resource type="Texture2D" uid="uid://b8t4brxv1xj6x" path="res://Assets/bg.png" id="1_nwob2"]
 [ext_resource type="Script" path="res://menu.gd" id="1_u5o4r"]
@@ -6,10 +6,13 @@
 [ext_resource type="Texture2D" uid="uid://t0ra2jy2jopq" path="res://Assets/mask2.png" id="3_cukfv"]
 [ext_resource type="PackedScene" uid="uid://d4g312fn0bvrl" path="res://Components/Vignette/vignette.tscn" id="3_t88vn"]
 [ext_resource type="PackedScene" uid="uid://dsour1luye00u" path="res://Components/Arena/arena.tscn" id="4_42am1"]
-[ext_resource type="PackedScene" uid="uid://dd5r65nviv8nj" path="res://Components/Player/player.tscn" id="5_vav71"]
 [ext_resource type="Script" path="res://Components/Player/Resources/behavior_resource.gd" id="6_37xw8"]
+[ext_resource type="Script" path="res://Components/Player/Resources/platformer_body.gd" id="7_0lu47"]
 [ext_resource type="PackedScene" uid="uid://sojhanv8dusj" path="res://Components/WorldEnvironment/world_environment.tscn" id="7_by1tr"]
 [ext_resource type="Theme" uid="uid://br3smno0fpler" path="res://Assets/theme.tres" id="10_ut1wp"]
+[ext_resource type="PackedScene" uid="uid://cw1n70g6sm5xn" path="res://Components/Enemies/enemy_walker.tscn" id="11_v5stw"]
+[ext_resource type="Script" path="res://Components/Player/Resources/enemy_walking.gd" id="13_lo230"]
+[ext_resource type="AudioStream" uid="uid://bi7uyefuj47lu" path="res://Assets/click.wav" id="13_p8qfn"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_hswkj"]
 blend_mode = 3
@@ -55,6 +58,23 @@ shader_parameter/density = 0.068
 shader_parameter/speed = Vector2(0, 0.2)
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_swpfk")
 
+[sub_resource type="Resource" id="Resource_p4ift"]
+resource_local_to_scene = true
+resource_name = "body"
+script = ExtResource("7_0lu47")
+GRAVITY_FORCE = 4900
+FLYING = false
+enabled = true
+
+[sub_resource type="Resource" id="Resource_uqio6"]
+resource_local_to_scene = true
+resource_name = "walking"
+script = ExtResource("13_lo230")
+WALK_SPEED = 10000
+FLYING = false
+should_walk_left = true
+enabled = true
+
 [node name="Menu" type="Node2D"]
 script = ExtResource("1_u5o4r")
 metadata/_edit_vertical_guides_ = [-2225.0]
@@ -95,11 +115,6 @@ position = Vector2(-480, 11)
 scale = Vector2(6.326, 4)
 texture = ExtResource("3_cukfv")
 
-[node name="Player" parent="Arena" instance=ExtResource("5_vav71")]
-position = Vector2(66, 864)
-behaviors = Array[ExtResource("6_37xw8")]([])
-state = 0
-
 [node name="Screen" type="CanvasLayer" parent="."]
 
 [node name="Fog" parent="Screen" instance=ExtResource("2_3kmmf")]
@@ -116,29 +131,48 @@ mouse_filter = 2
 [node name="WorldEnvironment" parent="." instance=ExtResource("7_by1tr")]
 
 [node name="Title" type="Label" parent="."]
-offset_left = -2232.0
-offset_top = -1044.0
-offset_right = -1283.0
-offset_bottom = -779.0
+offset_left = -2236.0
+offset_top = -331.0
+offset_right = -868.0
+offset_bottom = -66.0
 theme = ExtResource("10_ut1wp")
 theme_override_font_sizes/font_size = 200
-text = "GAME  TITLE"
+text = "SPACE   INVADERS"
+
+[node name="Title2" type="Label" parent="."]
+visible = false
+offset_left = -2409.0
+offset_top = -188.0
+offset_right = -700.0
+offset_bottom = 144.0
+theme = ExtResource("10_ut1wp")
+theme_override_font_sizes/font_size = 250
+text = "SPACE   INVADERS"
 
 [node name="Button" type="Button" parent="."]
-offset_left = -2219.0
-offset_top = -504.0
-offset_right = -1303.0
-offset_bottom = -303.0
+offset_left = -2227.0
+offset_top = 88.0
+offset_right = -870.0
+offset_bottom = 289.0
 theme = ExtResource("10_ut1wp")
 text = "Start game"
 
-[node name="Player" parent="." node_paths=PackedStringArray("game") instance=ExtResource("5_vav71")]
-position = Vector2(301, -759)
-rotation = 2.58157
-scale = Vector2(0.5, 0.5)
-skin = "Wasp"
-behaviors = Array[ExtResource("6_37xw8")]([])
-state = 0
-game = NodePath("..")
+[node name="Info" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0.176471)
+offset_left = 1022.0
+offset_top = 1317.0
+offset_right = 2546.0
+offset_bottom = 1582.0
+theme = ExtResource("10_ut1wp")
+theme_override_font_sizes/font_size = 60
+text = "Made   in   48   hours   for   Ludum   Dare   56   compo   by   Jiri Hysek"
 
+[node name="EnemyWalker" parent="." instance=ExtResource("11_v5stw")]
+behaviors = Array[ExtResource("6_37xw8")]([SubResource("Resource_p4ift"), SubResource("Resource_uqio6")])
+
+[node name="Click" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_p8qfn")
+
+[connection signal="mouse_entered" from="Button" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="Button" to="." method="_on_button_mouse_exited"]
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

@@ -16,14 +16,14 @@ func on_physics_process(delta):
 		fire()
 
 func fire():
+	character.play_audio("Shoot", true)
 	var bullet = Bullet.instantiate()
 	bullet.shooter = character
 	character.game.add_child(bullet)
 	bullet.position = character.global_position
 	if character.gravity_direction == -1:
-		#bullet.fire(character.gravity_normalized)
 
-				# Fire UP
+		# Fire UP
 		if SHOOTING_UP:
 			bullet.bounces = 5
 			bullet.fire(character.gravity_normalized)

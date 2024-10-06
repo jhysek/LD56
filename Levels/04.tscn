@@ -32,7 +32,7 @@ GRAVITY_FORCE = 4900
 FLYING = false
 enabled = true
 
-[sub_resource type="Resource" id="Resource_u1ifg"]
+[sub_resource type="Resource" id="Resource_o5x2w"]
 resource_local_to_scene = true
 resource_name = "jump"
 script = ExtResource("9_si8t5")
@@ -41,14 +41,14 @@ DOUBLE_JUMP_SPEED = 3000
 DOUBLE_JUMP = true
 enabled = true
 
-[sub_resource type="Resource" id="Resource_0m2wh"]
+[sub_resource type="Resource" id="Resource_3jy8k"]
 resource_local_to_scene = true
 resource_name = "walk"
 script = ExtResource("10_0mjwi")
 WALK_SPEED = 50000
 enabled = true
 
-[sub_resource type="Resource" id="Resource_e43i6"]
+[sub_resource type="Resource" id="Resource_kxc11"]
 resource_local_to_scene = true
 resource_name = "attack"
 script = ExtResource("11_pdtv6")
@@ -113,7 +113,7 @@ shader_parameter/density = 0.068
 shader_parameter/speed = Vector2(0, 0.2)
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_n6e4x")
 
-[sub_resource type="Resource" id="Resource_kgkgh"]
+[sub_resource type="Resource" id="Resource_ooqfp"]
 resource_local_to_scene = true
 resource_name = "body"
 script = ExtResource("8_g6rph")
@@ -183,7 +183,7 @@ texture = ExtResource("4_dhxc8")
 position = Vector2(-14, -908)
 rotation = 0.00755271
 scale = Vector2(0.4, 0.4)
-behaviors = Array[ExtResource("7_24org")]([SubResource("Resource_rqud0"), SubResource("Resource_u1ifg"), SubResource("Resource_0m2wh"), SubResource("Resource_e43i6"), SubResource("Resource_8b8kd")])
+behaviors = Array[ExtResource("7_24org")]([SubResource("Resource_rqud0"), SubResource("Resource_o5x2w"), SubResource("Resource_3jy8k"), SubResource("Resource_kxc11"), SubResource("Resource_8b8kd")])
 game = NodePath("..")
 
 [node name="JumpAttackWeapon" type="Area2D" parent="Player"]
@@ -266,7 +266,7 @@ light_mask = 1
 position = Vector2(5, 374)
 is_enemy = true
 skin = "Wasp"
-behaviors = Array[ExtResource("7_24org")]([SubResource("Resource_kgkgh"), SubResource("Resource_v31sb")])
+behaviors = Array[ExtResource("7_24org")]([SubResource("Resource_ooqfp"), SubResource("Resource_v31sb")])
 
 [node name="RotatingLayer" type="Node2D" parent="."]
 
@@ -274,7 +274,7 @@ behaviors = Array[ExtResource("7_24org")]([SubResource("Resource_kgkgh"), SubRes
 position = Vector2(337, -343)
 behaviors = Array[ExtResource("7_24org")]([SubResource("Resource_1gl6w"), SubResource("Resource_h2c2t")])
 
-[node name="Sentinel" parent="RotatingLayer" instance=ExtResource("22_vrqx4")]
+[node name="Sentinel" parent="RotatingLayer" groups=["Enemy"] instance=ExtResource("22_vrqx4")]
 position = Vector2(-332, 343)
 
 [node name="ResetTimer" type="Timer" parent="."]

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://yowlrd6jnnsc"]
+
+[ext_resource type="AudioStream" uid="uid://c1sfelv1s67xe" path="res://Assets/ambient.ogg" id="1_g4ute"]
+
+[node name="Music" type="AudioStreamPlayer"]
+stream = ExtResource("1_g4ute")
+volume_db = -7.161
+stream_paused = true
+bus = &"Echoed"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dd5r65nviv8nj"]
+[gd_scene load_steps=25 format=3 uid="uid://dd5r65nviv8nj"]
 
 [ext_resource type="Script" path="res://Components/Player/player.gd" id="1_pvmcb"]
 [ext_resource type="Script" path="res://Components/Player/Resources/behavior_resource.gd" id="2_lnp6x"]
@@ -8,6 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://bshyya67nsvrm" path="res://Components/Player/Spider/slash.png" id="6_w4o4n"]
 [ext_resource type="Texture2D" uid="uid://y7fghr4hq2v3" path="res://Components/Player/Spider/booster.png" id="7_5165f"]
 [ext_resource type="AudioStream" uid="uid://boakyox731juk" path="res://Components/Player/sfx/boost.wav" id="8_gdejw"]
+[ext_resource type="AudioStream" uid="uid://bm0l42vbck0sl" path="res://Components/Player/sfx/run.wav" id="9_bh7do"]
+[ext_resource type="AudioStream" uid="uid://bhbqta0scixnk" path="res://Components/Player/sfx/shoot.wav" id="10_btq4x"]
+[ext_resource type="AudioStream" uid="uid://bqpuot5t4r1cf" path="res://Components/Player/sfx/jump_back.wav" id="12_hfukw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kgxca"]
 radius = 85.0
@@ -1074,6 +1077,21 @@ texture_scale = 1.5
 [node name="Boost" type="AudioStreamPlayer" parent="Sfx"]
 stream = ExtResource("8_gdejw")
 volume_db = -7.0
+
+[node name="Run" type="AudioStreamPlayer" parent="Sfx"]
+stream = ExtResource("9_bh7do")
+volume_db = -5.0
+
+[node name="Shoot" type="AudioStreamPlayer" parent="Sfx"]
+stream = ExtResource("10_btq4x")
+max_polyphony = 2
+
+[node name="Jump" type="AudioStreamPlayer" parent="Sfx"]
+stream = ExtResource("12_hfukw")
+pitch_scale = 0.87
+
+[node name="JumpDown" type="AudioStreamPlayer" parent="Sfx"]
+stream = ExtResource("12_hfukw")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

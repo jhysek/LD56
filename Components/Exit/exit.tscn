@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://c2hap6qtscjon"]
+[gd_scene load_steps=11 format=3 uid="uid://c2hap6qtscjon"]
 
 [ext_resource type="Script" path="res://Components/Exit/exit.gd" id="1_qo20m"]
 [ext_resource type="Texture2D" uid="uid://qh0lxkaq3yqf" path="res://Components/Exit/circular_door.png" id="2_chn57"]
 [ext_resource type="Texture2D" uid="uid://dv6xsvf0ybgfi" path="res://Components/Exit/hole.png" id="2_mvyy5"]
 [ext_resource type="Texture2D" uid="uid://dkydmxh3http3" path="res://Components/Exit/rotator.png" id="3_5d1oh"]
 [ext_resource type="Texture2D" uid="uid://dn6sxxcjkt7kk" path="res://Components/Exit/iris_plate.png" id="3_yon4i"]
+[ext_resource type="AudioStream" uid="uid://cc4bdcxuxjpj1" path="res://Components/Exit/open.wav" id="6_elhku"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6amqw"]
 radius = 305.002
@@ -236,5 +237,8 @@ offset = Vector2(-106, 4)
 libraries = {
 "": SubResource("AnimationLibrary_j4owe")
 }
+
+[node name="Open" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_elhku")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

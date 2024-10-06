@@ -94,6 +94,17 @@ func animate(anim_name, force = false):
 	if anim.current_animation != anim_name or force:
 		anim.play(anim_name)
 
+func stop_audio(name):
+	$Sfx.get_node(name).stop()
+
+func play_audio(name, randomize_pitch = false):
+	var sfx = $Sfx.get_node(name)
+	if randomize_pitch:
+		sfx.pitch_scale = 1 + randf_range(-0.08, 0.08)
+	if !sfx.playing:
+		sfx.play()
+
+
 func hit():
 	health -= 1
 	print("HIT! current health: ", health)

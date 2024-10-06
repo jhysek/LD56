@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://c6hkls75fs73w"]
+[gd_scene load_steps=11 format=3 uid="uid://c6hkls75fs73w"]
 
 [ext_resource type="Texture2D" uid="uid://dq8o2osjsprl2" path="res://shape_full.png" id="1_iep4i"]
 [ext_resource type="Script" path="res://Components/Explosion/explosion.gd" id="1_o3rew"]
 [ext_resource type="Texture2D" uid="uid://bxxajreu48ji7" path="res://Assets/light.png" id="2_542dm"]
 [ext_resource type="PackedScene" uid="uid://djcvcpk4glyoe" path="res://Components/HitParticle/hit_particle.tscn" id="3_bn1tj"]
+[ext_resource type="AudioStream" uid="uid://rq7oyhd5ej04" path="res://Components/Explosion/explode.wav" id="5_rnefw"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_87obl"]
 blend_mode = 1
@@ -182,6 +183,8 @@ texture = ExtResource("2_542dm")
 texture_scale = 2.0
 
 [node name="Boom" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_rnefw")
+volume_db = 3.242
 
 [node name="HitArea" type="Area2D" parent="."]
 scale = Vector2(0.1, 0.1)

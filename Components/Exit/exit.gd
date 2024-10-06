@@ -16,9 +16,11 @@ func _process(delta):
 
 func open():
 	opened = true
+	$Open.play()
 	$AnimationPlayer.play("Open")
 
 func close():
+	$Open.play()
 	opened = false
 	$AnimationPlayer.play_backwards("Open")
 

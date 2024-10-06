@@ -47,3 +47,6 @@ func on_physics_process(delta):
 		character.partial_velocities.walking = Vector2.ZERO
 		if character.grounded:
 			character.animate('Idle')
+		character.stop_audio('Run')
+	else:
+		character.play_audio('Run')

@@ -42,12 +42,13 @@ func lerp_rotation():
 		character.rotation -= PI / 2
 		character.up_direction = gravity_vector.rotated(PI)
 
-func unlock_gravity():
+func unlock_gravity(center_pos = Vector2.ZERO):
 	gravity_attractor = null
-	center_of_gravity = Vector2.ZERO
+	center_of_gravity = center_pos
 	gravity_direction = -1
 	character.gravity_direction = -1
 	character.speed_damping = 1
+
 
 func lock_gravity_to(node: Node2D):
 	gravity_attractor = node

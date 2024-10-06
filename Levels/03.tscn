@@ -31,7 +31,7 @@ GRAVITY_FORCE = 4900
 FLYING = false
 enabled = true
 
-[sub_resource type="Resource" id="Resource_ipgu4"]
+[sub_resource type="Resource" id="Resource_qn4uv"]
 resource_local_to_scene = true
 resource_name = "jump"
 script = ExtResource("8_lam1p")
@@ -40,14 +40,14 @@ DOUBLE_JUMP_SPEED = 3000
 DOUBLE_JUMP = true
 enabled = true
 
-[sub_resource type="Resource" id="Resource_qv1ak"]
+[sub_resource type="Resource" id="Resource_ygmrd"]
 resource_local_to_scene = true
 resource_name = "walk"
 script = ExtResource("9_tccoe")
 WALK_SPEED = 50000
 enabled = true
 
-[sub_resource type="Resource" id="Resource_u4jga"]
+[sub_resource type="Resource" id="Resource_47u5a"]
 resource_local_to_scene = true
 resource_name = "attack"
 script = ExtResource("10_b8c6q")
@@ -112,7 +112,7 @@ shader_parameter/density = 0.068
 shader_parameter/speed = Vector2(0, 0.2)
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_n6e4x")
 
-[sub_resource type="Resource" id="Resource_3opol"]
+[sub_resource type="Resource" id="Resource_jiw47"]
 resource_local_to_scene = true
 resource_name = "body"
 script = ExtResource("7_xg6c2")
@@ -136,7 +136,7 @@ FLYING = false
 should_walk_left = false
 enabled = true
 
-[sub_resource type="Resource" id="Resource_d27rb"]
+[sub_resource type="Resource" id="Resource_nuijq"]
 resource_local_to_scene = true
 resource_name = "body"
 script = ExtResource("7_xg6c2")
@@ -144,7 +144,7 @@ GRAVITY_FORCE = 4900
 FLYING = false
 enabled = true
 
-[sub_resource type="Resource" id="Resource_k57j7"]
+[sub_resource type="Resource" id="Resource_pid4n"]
 resource_local_to_scene = true
 resource_name = "walking"
 script = ExtResource("19_gncnp")
@@ -202,7 +202,7 @@ texture = ExtResource("3_7uap0")
 position = Vector2(11, 910)
 rotation = 0.00755271
 scale = Vector2(0.4, 0.4)
-behaviors = Array[ExtResource("6_noq7y")]([SubResource("Resource_rqud0"), SubResource("Resource_ipgu4"), SubResource("Resource_qv1ak"), SubResource("Resource_u4jga"), SubResource("Resource_8b8kd")])
+behaviors = Array[ExtResource("6_noq7y")]([SubResource("Resource_rqud0"), SubResource("Resource_qn4uv"), SubResource("Resource_ygmrd"), SubResource("Resource_47u5a"), SubResource("Resource_8b8kd")])
 game = NodePath("..")
 
 [node name="JumpAttackWeapon" type="Area2D" parent="Player"]
@@ -285,7 +285,7 @@ light_mask = 1
 position = Vector2(1, -895)
 is_enemy = true
 skin = "Wasp"
-behaviors = Array[ExtResource("6_noq7y")]([SubResource("Resource_3opol"), SubResource("Resource_jfwio"), SubResource("Resource_v31sb")])
+behaviors = Array[ExtResource("6_noq7y")]([SubResource("Resource_jiw47"), SubResource("Resource_jfwio"), SubResource("Resource_v31sb")])
 
 [node name="RotatingLayer" type="Node2D" parent="."]
 visible = false
@@ -293,7 +293,7 @@ visible = false
 [node name="EnemyWalker2" parent="." instance=ExtResource("17_pkm01")]
 position = Vector2(9, -380)
 skin = "Wasp"
-behaviors = Array[ExtResource("6_noq7y")]([SubResource("Resource_d27rb"), SubResource("Resource_k57j7"), SubResource("Resource_72axx")])
+behaviors = Array[ExtResource("6_noq7y")]([SubResource("Resource_nuijq"), SubResource("Resource_pid4n"), SubResource("Resource_72axx")])
 
 [node name="ResetTimer" type="Timer" parent="."]
 one_shot = true

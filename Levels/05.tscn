@@ -33,7 +33,7 @@ GRAVITY_FORCE = 4900
 FLYING = false
 enabled = true
 
-[sub_resource type="Resource" id="Resource_hm76v"]
+[sub_resource type="Resource" id="Resource_nasl2"]
 resource_local_to_scene = true
 resource_name = "jump"
 script = ExtResource("9_bhh8i")
@@ -42,14 +42,14 @@ DOUBLE_JUMP_SPEED = 3000
 DOUBLE_JUMP = true
 enabled = true
 
-[sub_resource type="Resource" id="Resource_te8w5"]
+[sub_resource type="Resource" id="Resource_krhr5"]
 resource_local_to_scene = true
 resource_name = "walk"
 script = ExtResource("10_o45fc")
 WALK_SPEED = 50000
 enabled = true
 
-[sub_resource type="Resource" id="Resource_qn7q0"]
+[sub_resource type="Resource" id="Resource_d7hc8"]
 resource_local_to_scene = true
 resource_name = "attack"
 script = ExtResource("11_mperw")
@@ -114,7 +114,7 @@ shader_parameter/density = 0.068
 shader_parameter/speed = Vector2(0, 0.2)
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_n6e4x")
 
-[sub_resource type="Resource" id="Resource_vkpmf"]
+[sub_resource type="Resource" id="Resource_yoh4p"]
 resource_local_to_scene = true
 resource_name = "body"
 script = ExtResource("8_dj5xk")
@@ -144,7 +144,7 @@ delay = 2
 jump_speed = 3000
 enabled = true
 
-[sub_resource type="Resource" id="Resource_midkm"]
+[sub_resource type="Resource" id="Resource_7mhko"]
 resource_local_to_scene = true
 resource_name = "body"
 script = ExtResource("8_dj5xk")
@@ -152,7 +152,7 @@ GRAVITY_FORCE = 4900
 FLYING = false
 enabled = true
 
-[sub_resource type="Resource" id="Resource_p70kn"]
+[sub_resource type="Resource" id="Resource_jiewa"]
 resource_local_to_scene = true
 resource_name = "walking"
 script = ExtResource("20_i2h8l")
@@ -161,7 +161,7 @@ FLYING = false
 should_walk_left = true
 enabled = true
 
-[sub_resource type="Resource" id="Resource_gy316"]
+[sub_resource type="Resource" id="Resource_fbyrw"]
 resource_local_to_scene = true
 resource_name = "body"
 script = ExtResource("8_dj5xk")
@@ -169,7 +169,7 @@ GRAVITY_FORCE = 4900
 FLYING = false
 enabled = true
 
-[sub_resource type="Resource" id="Resource_1oetj"]
+[sub_resource type="Resource" id="Resource_5cq4c"]
 resource_local_to_scene = true
 resource_name = "walking"
 script = ExtResource("20_i2h8l")
@@ -220,7 +220,7 @@ OBSTACLES = true
 position = Vector2(7, 877)
 rotation = 0.00755271
 scale = Vector2(0.4, 0.4)
-behaviors = Array[ExtResource("7_s53kg")]([SubResource("Resource_rqud0"), SubResource("Resource_hm76v"), SubResource("Resource_te8w5"), SubResource("Resource_qn7q0"), SubResource("Resource_8b8kd")])
+behaviors = Array[ExtResource("7_s53kg")]([SubResource("Resource_rqud0"), SubResource("Resource_nasl2"), SubResource("Resource_krhr5"), SubResource("Resource_d7hc8"), SubResource("Resource_8b8kd")])
 game = NodePath("..")
 
 [node name="JumpAttackWeapon" type="Area2D" parent="Player"]
@@ -303,13 +303,13 @@ light_mask = 1
 position = Vector2(-828, 12)
 is_enemy = true
 skin = "Scorpio"
-behaviors = Array[ExtResource("7_s53kg")]([SubResource("Resource_vkpmf"), SubResource("Resource_jfwio"), SubResource("Resource_v31sb"), SubResource("Resource_ldyxh")])
+behaviors = Array[ExtResource("7_s53kg")]([SubResource("Resource_yoh4p"), SubResource("Resource_jfwio"), SubResource("Resource_v31sb"), SubResource("Resource_ldyxh")])
 
 [node name="EnemyWalker2" parent="." instance=ExtResource("18_h0gxq")]
 position = Vector2(5, -373)
 is_enemy = true
 skin = "Wasp"
-behaviors = Array[ExtResource("7_s53kg")]([SubResource("Resource_midkm"), SubResource("Resource_p70kn")])
+behaviors = Array[ExtResource("7_s53kg")]([SubResource("Resource_7mhko"), SubResource("Resource_jiewa")])
 
 [node name="RotatingLayer" type="Node2D" parent="."]
 
@@ -319,7 +319,7 @@ position = Vector2(-1, 595)
 [node name="EnemyWalker3" parent="." instance=ExtResource("18_h0gxq")]
 position = Vector2(-2, -898)
 skin = "Wasp"
-behaviors = Array[ExtResource("7_s53kg")]([SubResource("Resource_gy316"), SubResource("Resource_1oetj")])
+behaviors = Array[ExtResource("7_s53kg")]([SubResource("Resource_fbyrw"), SubResource("Resource_5cq4c")])
 
 [node name="ResetTimer" type="Timer" parent="."]
 one_shot = true

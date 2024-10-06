@@ -29,7 +29,7 @@ func _ready() -> void:
 	$Player.hitted.connect(_on_player_hit)
 	$Player.killed.connect(_on_player_killed)
 	update_enemy_counter()
-	start_wave()
+	#start_wave()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -46,8 +46,8 @@ func _on_spawn_timeout() -> void:
 	if current_wave.enemies.size() > 0:
 		spawn(current_wave.enemies.pop_front())
 		spawn_timer.start()
-	else:
-		$Info.text = "WAVE " + str(current_wave_idx + 1) + " deployed"
+	#else:
+		#$Info.text = "WAVE " + str(current_wave_idx + 1) + " deployed"
 
 func start_wave():
 	if WAVES.size() > 0:
