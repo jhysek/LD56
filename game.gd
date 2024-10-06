@@ -65,7 +65,6 @@ func spawn(enemy_scene):
 	var enemy = enemy_scene.instantiate()
 	add_child(enemy)
 	enemies.append(enemy)
-	print("> connecting: ", enemy.name)
 	enemy.killed.connect(_on_enemy_killed)
 	enemy.position = $Arena.spawn_position()
 	update_enemy_counter()

@@ -26,6 +26,9 @@ func on_physics_process(delta):
 	character.grounded = grounded
 	var jump_speed = JUMP_SPEED
 
+	if grounded:
+		character.jumpattack = false
+
 	in_air = !grounded
 	_handle_coyote_time(delta, grounded)
 

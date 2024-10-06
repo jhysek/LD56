@@ -26,6 +26,7 @@ var gravity_velocity = Vector2.ZERO
 var speed_damping = 1
 var gravity_direction = -1
 var direction = 1
+var jumpattack = false
 
 var partial_velocities = {
 	gravity = Vector2(0,0),
@@ -107,7 +108,10 @@ func die():
 	print("DEAD")
 	explode()
 	state = State.DEAD
-	hide()
+	if is_in_group("Enemy"):
+		queue_free()
+	else:
+		hide()
 
 func explode():
 	var explosion = Explosion.instantiate()

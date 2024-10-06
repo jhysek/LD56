@@ -17,6 +17,7 @@ func _on_weapon_area_body_entered(body: Node2D) -> void:
 
 func _on_jump_attack_weapon_body_entered(body: Node2D) -> void:
 	if !grounded and body.is_in_group("Enemy"):
+		jumpattack = true
 		body.hit()
 
 func boost():
@@ -40,3 +41,19 @@ func reload_skin():
 	$Visual/Body/Leg3/Bottom.texture = load("res://Components/Player/" + skin + "/leg_down.png")
 	$Visual/Body/Leg4.texture = load("res://Components/Player/" + skin + "/leg_up.png")
 	$Visual/Body/Leg4/Bottom.texture = load("res://Components/Player/" + skin + "/leg_down.png")
+
+
+func _on_jump_area_body_entered(body: Node2D) -> void:
+	if body == self:
+		return
+
+	if state == State.DEAD:
+		return
+
+	if body.name == "Player" and !body.jumpattack:
+		body.hit()
+		return
+
+	if !grounded and body.is_in_group("Enemy"):
+		jumpattack = true
+		body.hit()

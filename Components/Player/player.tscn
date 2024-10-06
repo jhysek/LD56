@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dd5r65nviv8nj"]
+[gd_scene load_steps=22 format=3 uid="uid://dd5r65nviv8nj"]
 
 [ext_resource type="Script" path="res://Components/Player/player.gd" id="1_pvmcb"]
 [ext_resource type="Script" path="res://Components/Player/Resources/behavior_resource.gd" id="2_lnp6x"]
@@ -938,6 +938,9 @@ _data = {
 "RESET": SubResource("Animation_1wu1r")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_koy02"]
+size = Vector2(356, 20)
+
 [node name="Player" type="CharacterBody2D" groups=["GravityBody", "Killable"]]
 light_mask = 2
 collision_layer = 2
@@ -1088,5 +1091,15 @@ libraries = {
 wait_time = 0.3
 one_shot = true
 
+[node name="JumpArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+input_pickable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpArea"]
+position = Vector2(5, 78)
+shape = SubResource("RectangleShape2D_koy02")
+
 [connection signal="body_entered" from="Visual/Body/Weapon/Bottom/WeaponArea" to="." method="_on_weapon_area_body_entered"]
 [connection signal="timeout" from="Booster" to="." method="_on_booster_timeout"]
+[connection signal="body_entered" from="JumpArea" to="." method="_on_jump_area_body_entered"]
