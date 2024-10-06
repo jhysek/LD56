@@ -17,6 +17,7 @@ func on_physics_process(delta):
 
 func fire():
 	var bullet = Bullet.instantiate()
+	bullet.shooter = character
 	character.game.add_child(bullet)
 	bullet.position = character.global_position
 	if character.gravity_direction == -1:

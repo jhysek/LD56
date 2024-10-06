@@ -11,11 +11,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-
 func _on_gravity_area_body_entered(body: Node2D) -> void:
-	print("> ", body.name)
 	if body.is_in_group("GravityBody"):
-		print("LOCKING...")
 		var body_behavior = body.get_behavior_by_name('body')
 		if body_behavior:
 			body_behavior.lock_gravity_to(self)
@@ -23,7 +20,12 @@ func _on_gravity_area_body_entered(body: Node2D) -> void:
 
 func _on_gravity_area_body_exited(body: Node2D) -> void:
 	if body.is_in_group("GravityBody"):
-		print("> ", body.name, " unlocking,.")
 		var body_behavior = body.get_behavior_by_name('body')
 		if body_behavior:
 			body_behavior.unlock_gravity()
+
+func close():
+	$AnimationPlayer.play("Close")
+
+func open():
+	$AnimationPlayer.play("Open")

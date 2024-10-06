@@ -1,0 +1,184 @@
+[gd_scene load_steps=14 format=3 uid="uid://b2kmedoumd5l3"]
+
+[ext_resource type="PackedScene" uid="uid://dd5r65nviv8nj" path="res://Components/Player/player.tscn" id="1_5aylq"]
+[ext_resource type="Texture2D" uid="uid://bvghoy01ncxkc" path="res://Components/Player/Sentinel/body.png" id="2_7hdfs"]
+[ext_resource type="Script" path="res://Components/Player/Sentinel/sentinel.gd" id="2_ci1kr"]
+[ext_resource type="Script" path="res://Components/Player/Resources/behavior_resource.gd" id="3_atmt4"]
+[ext_resource type="Script" path="res://Components/Player/Resources/platformer_body.gd" id="4_8evfn"]
+[ext_resource type="Script" path="res://Components/Player/Resources/enemy_shooting.gd" id="5_1n2vj"]
+[ext_resource type="Texture2D" uid="uid://y7fghr4hq2v3" path="res://Components/Player/Spider/booster.png" id="7_is8e1"]
+
+[sub_resource type="Resource" id="Resource_2dnk7"]
+script = ExtResource("4_8evfn")
+GRAVITY_FORCE = 4900
+FLYING = true
+enabled = true
+
+[sub_resource type="Resource" id="Resource_gjx4v"]
+script = ExtResource("5_1n2vj")
+SHOOTING_UP = false
+SHOOTING_DOWN = true
+delay = 2.5
+enabled = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_rkybx"]
+blend_mode = 1
+
+[sub_resource type="Animation" id="Animation_dw0a7"]
+resource_name = "Idle"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Body/Booster:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.633333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.8, 0.8)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/Body/Booster/PointLight2D:energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.633333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.4, 2.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visual/Booster:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Visual/Body/Booster:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.333333, 0.833333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0993092, -0.0855266]
+}
+
+[sub_resource type="Animation" id="Animation_48qll"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual/Body/Booster:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual/Body/Booster/PointLight2D:energy")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visual/Booster:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Visual/Body/Booster:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0993092]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yploo"]
+_data = {
+"Idle": SubResource("Animation_dw0a7"),
+"RESET": SubResource("Animation_48qll")
+}
+
+[node name="Sentinel" instance=ExtResource("1_5aylq")]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("2_ci1kr")
+behaviors = Array[ExtResource("3_atmt4")]([SubResource("Resource_2dnk7"), SubResource("Resource_gjx4v")])
+
+[node name="Body" parent="Visual" index="0"]
+texture = ExtResource("2_7hdfs")
+
+[node name="Leg1" parent="Visual/Body" index="0"]
+visible = false
+
+[node name="Leg2" parent="Visual/Body" index="1"]
+visible = false
+
+[node name="Leg4" parent="Visual/Body" index="2"]
+visible = false
+
+[node name="Bottom" parent="Visual/Body/Weapon" index="0"]
+visible = false
+
+[node name="WeaponArea" parent="Visual/Body/Weapon/Bottom" index="0"]
+visible = false
+
+[node name="CollisionShape2D" parent="Visual/Body/Weapon/Bottom/WeaponArea" index="0"]
+visible = false
+
+[node name="Booster" type="Sprite2D" parent="Visual/Body" index="5"]
+self_modulate = Color(0.1288, 0.56, 0.545627, 0.160784)
+material = SubResource("CanvasItemMaterial_rkybx")
+position = Vector2(4, 54)
+rotation = 0.0993092
+texture = ExtResource("7_is8e1")
+offset = Vector2(-2, 150)
+
+[node name="PointLight2D" type="PointLight2D" parent="Visual/Body/Booster" index="0"]
+position = Vector2(0, 44)
+energy = 1.4
+texture = ExtResource("7_is8e1")
+texture_scale = 1.4
+
+[node name="FirePos" type="Marker2D" parent="." index="6"]
+position = Vector2(-2, 86)
+
+[node name="BoosterAnim" type="AnimationPlayer" parent="." index="7"]
+libraries = {
+"": SubResource("AnimationLibrary_yploo")
+}
+autoplay = "Idle"

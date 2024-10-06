@@ -84,9 +84,8 @@ texture = ExtResource("1_nwob2")
 stretch_mode = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Arena" parent="." node_paths=PackedStringArray("game") instance=ExtResource("4_42am1")]
+[node name="Arena" parent="." instance=ExtResource("4_42am1")]
 position = Vector2(794, 0)
-game = NodePath("..")
 
 [node name="Mask" type="Sprite2D" parent="Arena"]
 modulate = Color(1, 1, 1, 0.980392)
@@ -132,5 +131,14 @@ offset_right = -1303.0
 offset_bottom = -303.0
 theme = ExtResource("10_ut1wp")
 text = "Start game"
+
+[node name="Player" parent="." node_paths=PackedStringArray("game") instance=ExtResource("5_vav71")]
+position = Vector2(301, -759)
+rotation = 2.58157
+scale = Vector2(0.5, 0.5)
+skin = "Wasp"
+behaviors = Array[ExtResource("6_37xw8")]([])
+state = 0
+game = NodePath("..")
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

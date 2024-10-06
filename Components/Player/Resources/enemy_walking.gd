@@ -2,6 +2,7 @@ class_name EnemyWalking
 extends BehaviorResource
 
 @export var WALK_SPEED: int = 70000
+@export var FLYING = false
 @export var should_walk_left: bool = true
 
 var direction: Vector2 = Vector2.ZERO
@@ -14,7 +15,7 @@ func on_physics_process(delta):
 	if !enabled:
 		return
 
-	character.grounded = character.is_on_floor()
+	character.grounded = character.is_on_floor() or FLYING
 	character.partial_velocities.walking = Vector2.ZERO
 
 	if !character.grounded:

@@ -1,7 +1,7 @@
 class_name EnemyJumping
 extends BehaviorResource
 
-@export var delay = 3
+@export var delay = 2
 @export var jump_speed = 3000
 var cooldown = delay
 

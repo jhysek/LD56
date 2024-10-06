@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://b0fy4doifqk7s"]
+[gd_scene load_steps=38 format=3 uid="uid://b0fy4doifqk7s"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_cc2qk"]
 [ext_resource type="PackedScene" uid="uid://dd5r65nviv8nj" path="res://Components/Player/player.tscn" id="1_lenhx"]
@@ -17,7 +17,10 @@
 [ext_resource type="Script" path="res://Components/Player/Resources/enemy_walking.gd" id="11_p5b7s"]
 [ext_resource type="Theme" uid="uid://br3smno0fpler" path="res://Assets/theme.tres" id="12_m161q"]
 [ext_resource type="PackedScene" uid="uid://sojhanv8dusj" path="res://Components/WorldEnvironment/world_environment.tscn" id="13_4usww"]
+[ext_resource type="Texture2D" uid="uid://dvkdlvqssrxob" path="res://Components/Player/Wasp/icon.png" id="16_8adlu"]
 [ext_resource type="Script" path="res://Components/Player/Resources/enemy_jumping.gd" id="18_0lk2f"]
+[ext_resource type="Script" path="res://Components/Player/Resources/enemy_shooting.gd" id="19_mcxug"]
+[ext_resource type="PackedScene" uid="uid://b2kmedoumd5l3" path="res://Components/Player/Sentinel/sentinel.tscn" id="20_6riwh"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jwp14"]
 blend_mode = 3
@@ -26,9 +29,10 @@ blend_mode = 3
 resource_name = "body"
 script = ExtResource("10_vcx2w")
 GRAVITY_FORCE = 4900
+FLYING = false
 enabled = true
 
-[sub_resource type="Resource" id="Resource_10m8f"]
+[sub_resource type="Resource" id="Resource_svw6c"]
 resource_local_to_scene = true
 resource_name = "jump"
 script = ExtResource("7_3d5ei")
@@ -37,14 +41,14 @@ DOUBLE_JUMP_SPEED = 3000
 DOUBLE_JUMP = true
 enabled = true
 
-[sub_resource type="Resource" id="Resource_3kjgi"]
+[sub_resource type="Resource" id="Resource_wdmeg"]
 resource_local_to_scene = true
 resource_name = "walk"
 script = ExtResource("8_2rm7u")
 WALK_SPEED = 50000
 enabled = true
 
-[sub_resource type="Resource" id="Resource_ipm0e"]
+[sub_resource type="Resource" id="Resource_250sb"]
 resource_local_to_scene = true
 resource_name = "attack"
 script = ExtResource("8_vw1xm")
@@ -58,6 +62,15 @@ enabled = true
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pbbbo"]
 size = Vector2(400, 20)
+
+[sub_resource type="Environment" id="Environment_hdpvo"]
+background_mode = 3
+tonemap_mode = 2
+glow_enabled = true
+glow_intensity = 1.51
+glow_bloom = 0.25
+adjustment_contrast = 1.18
+adjustment_saturation = 0.66
 
 [sub_resource type="Shader" id="Shader_a0w78"]
 code = "shader_type canvas_item;
@@ -100,25 +113,32 @@ shader_parameter/density = 0.068
 shader_parameter/speed = Vector2(0, 0.2)
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_n6e4x")
 
-[sub_resource type="Resource" id="Resource_d5w7g"]
+[sub_resource type="Resource" id="Resource_t4dci"]
 resource_local_to_scene = true
 resource_name = "body"
 script = ExtResource("10_vcx2w")
 GRAVITY_FORCE = 4900
+FLYING = false
 enabled = true
 
-[sub_resource type="Resource" id="Resource_vjqls"]
-resource_local_to_scene = true
-resource_name = "walking"
+[sub_resource type="Resource" id="Resource_jfwio"]
+resource_name = "shoot"
+script = ExtResource("19_mcxug")
+SHOOTING_UP = true
+SHOOTING_DOWN = false
+delay = 2.5
+enabled = true
+
+[sub_resource type="Resource" id="Resource_v31sb"]
 script = ExtResource("11_p5b7s")
-WALK_SPEED = 50000
-should_walk_left = true
+WALK_SPEED = 30000
+FLYING = false
+should_walk_left = false
 enabled = true
 
-[sub_resource type="Resource" id="Resource_vhdl0"]
-resource_name = "jump"
+[sub_resource type="Resource" id="Resource_ldyxh"]
 script = ExtResource("18_0lk2f")
-delay = 3
+delay = 2
 jump_speed = 3000
 enabled = true
 
@@ -156,14 +176,13 @@ position = Vector2(38.0003, 11)
 scale = Vector2(5.29, 4)
 texture = ExtResource("3_qu6wk")
 
-[node name="Arena" parent="." node_paths=PackedStringArray("game") instance=ExtResource("7_ujggt")]
-game = NodePath("..")
+[node name="Arena" parent="." instance=ExtResource("7_ujggt")]
 
 [node name="Player" parent="." node_paths=PackedStringArray("game") instance=ExtResource("1_lenhx")]
 position = Vector2(282, -107)
 rotation = 0.00755271
 scale = Vector2(0.4, 0.4)
-behaviors = Array[ExtResource("3_s4iir")]([SubResource("Resource_rqud0"), SubResource("Resource_10m8f"), SubResource("Resource_3kjgi"), SubResource("Resource_ipm0e"), SubResource("Resource_8b8kd")])
+behaviors = Array[ExtResource("3_s4iir")]([SubResource("Resource_rqud0"), SubResource("Resource_svw6c"), SubResource("Resource_wdmeg"), SubResource("Resource_250sb"), SubResource("Resource_8b8kd")])
 game = NodePath("..")
 
 [node name="JumpAttackWeapon" type="Area2D" parent="Player"]
@@ -213,6 +232,7 @@ theme = ExtResource("12_m161q")
 horizontal_alignment = 1
 
 [node name="WorldEnvironment" parent="." instance=ExtResource("13_4usww")]
+environment = SubResource("Environment_hdpvo")
 
 [node name="Screen" type="CanvasLayer" parent="."]
 
@@ -226,11 +246,35 @@ grow_vertical = 2
 
 [node name="Vignette" parent="Screen" instance=ExtResource("3_u1d3h")]
 
+[node name="Enemies" type="Label" parent="Screen"]
+offset_left = 1068.0
+offset_top = 55.0
+offset_right = 1177.0
+offset_bottom = 89.0
+theme = ExtResource("12_m161q")
+theme_override_font_sizes/font_size = 25
+text = "0"
+
+[node name="Icon" type="Sprite2D" parent="Screen/Enemies"]
+position = Vector2(-44, 20)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("16_8adlu")
+
 [node name="EnemyWalker" parent="." instance=ExtResource("10_gt1qp")]
-position = Vector2(-742, -8)
+light_mask = 1
+position = Vector2(-559, 8)
 is_enemy = true
-behaviors = Array[ExtResource("3_s4iir")]([SubResource("Resource_d5w7g"), SubResource("Resource_vjqls"), SubResource("Resource_vhdl0")])
+skin = "Scorpio"
+behaviors = Array[ExtResource("3_s4iir")]([SubResource("Resource_t4dci"), SubResource("Resource_jfwio"), SubResource("Resource_v31sb"), SubResource("Resource_ldyxh")])
+
+[node name="RotatingLayer" type="Node2D" parent="."]
+
+[node name="Sentinel" parent="RotatingLayer" groups=["Enemy"] instance=ExtResource("20_6riwh")]
+position = Vector2(-503, 416)
 
 [connection signal="body_entered" from="Player/JumpAttackWeapon" to="Player" method="_on_jump_attack_weapon_body_entered"]
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timeout"]
 [connection signal="timeout" from="WaveTimer" to="." method="_on_wave_timer_timeout"]
+[connection signal="killed" from="RotatingLayer/Sentinel" to="." method="_on_enemy_killed"]
+
+[editable path="WorldEnvironment"]

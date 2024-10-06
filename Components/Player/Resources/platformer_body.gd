@@ -2,6 +2,7 @@ class_name PlatformerBody
 extends BehaviorResource
 
 @export var GRAVITY_FORCE = 70 * 70;
+@export var FLYING = false
 
 var gravity_attractor = null
 var center_of_gravity = Vector2(0, 0)
@@ -27,9 +28,9 @@ func calculate_and_apply_gravity(delta):
 	gravity_vector = Vector2(cos(gravity_angle), sin(gravity_angle))
 
 	character.gravity_normalized = gravity_vector
-	#Debug.gravity = gravity_vector * delta * GRAVITY_FORCE * gravity_direction
 
-	character.partial_velocities.gravity = gravity_vector * delta * GRAVITY_FORCE * gravity_direction
+	if !FLYING:
+		character.partial_velocities.gravity = gravity_vector * delta * GRAVITY_FORCE * gravity_direction
 
 # bottom of the character is rotated towards gravity
 func lerp_rotation():

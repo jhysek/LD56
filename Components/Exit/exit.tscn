@@ -1,0 +1,240 @@
+[gd_scene load_steps=10 format=3 uid="uid://c2hap6qtscjon"]
+
+[ext_resource type="Script" path="res://Components/Exit/exit.gd" id="1_qo20m"]
+[ext_resource type="Texture2D" uid="uid://qh0lxkaq3yqf" path="res://Components/Exit/circular_door.png" id="2_chn57"]
+[ext_resource type="Texture2D" uid="uid://dv6xsvf0ybgfi" path="res://Components/Exit/hole.png" id="2_mvyy5"]
+[ext_resource type="Texture2D" uid="uid://dkydmxh3http3" path="res://Components/Exit/rotator.png" id="3_5d1oh"]
+[ext_resource type="Texture2D" uid="uid://dn6sxxcjkt7kk" path="res://Components/Exit/iris_plate.png" id="3_yon4i"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6amqw"]
+radius = 305.002
+
+[sub_resource type="Animation" id="Animation_6jbdv"]
+resource_name = "Open"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Circular/IrisPlate2:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-0.977597, -1.96123]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Circular/IrisPlate1:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -1.02417]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Circular/IrisPlate3:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-1.95477, -3.07306]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Circular/IrisPlate4:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-2.93215, -4.10012]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Circular/IrisPlate5:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-3.90954, -5.1]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Circular/IrisPlate6:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-5.08714, -6.44666]
+}
+
+[sub_resource type="Animation" id="Animation_ipuxy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Circular/IrisPlate2:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.977597]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Circular/IrisPlate1:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Circular/IrisPlate3:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-1.95477]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Circular/IrisPlate4:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-2.93215]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Circular/IrisPlate5:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-3.90954]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Circular/IrisPlate6:rotation")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-5.08714]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_j4owe"]
+_data = {
+"Open": SubResource("Animation_6jbdv"),
+"RESET": SubResource("Animation_ipuxy")
+}
+
+[node name="Exit" type="Area2D"]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_qo20m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_6amqw")
+
+[node name="Hole" type="Sprite2D" parent="."]
+modulate = Color(0.32, 0.32, 0.32, 0.882353)
+texture = ExtResource("2_mvyy5")
+
+[node name="Border" type="Sprite2D" parent="."]
+modulate = Color(0.17, 0.972333, 1, 0.509804)
+self_modulate = Color(0.25, 0.25, 0.25, 0.419608)
+scale = Vector2(1.1, 1.1)
+texture = ExtResource("2_chn57")
+
+[node name="Indicator" type="Sprite2D" parent="Border"]
+scale = Vector2(1.1, 1.1)
+texture = ExtResource("3_5d1oh")
+
+[node name="Circular" type="Sprite2D" parent="."]
+clip_children = 1
+texture = ExtResource("2_chn57")
+
+[node name="IrisPlate1" type="Sprite2D" parent="Circular"]
+position = Vector2(211, 116)
+scale = Vector2(0.9, 1)
+texture = ExtResource("3_yon4i")
+offset = Vector2(-106, 4)
+
+[node name="IrisPlate2" type="Sprite2D" parent="Circular"]
+position = Vector2(212, -107)
+rotation = -0.977597
+scale = Vector2(0.9, 1)
+texture = ExtResource("3_yon4i")
+offset = Vector2(-106, 4)
+
+[node name="IrisPlate3" type="Sprite2D" parent="Circular"]
+position = Vector2(28, -233)
+rotation = -1.95477
+scale = Vector2(0.9, 1)
+texture = ExtResource("3_yon4i")
+offset = Vector2(-106, 4)
+
+[node name="IrisPlate4" type="Sprite2D" parent="Circular"]
+position = Vector2(-180, -149)
+rotation = -2.93215
+scale = Vector2(0.9, 1)
+texture = ExtResource("3_yon4i")
+offset = Vector2(-106, 4)
+
+[node name="IrisPlate5" type="Sprite2D" parent="Circular"]
+position = Vector2(-219, 75)
+rotation = -3.90954
+scale = Vector2(0.9, 1)
+texture = ExtResource("3_yon4i")
+offset = Vector2(-106, 4)
+
+[node name="IrisPlate6" type="Sprite2D" parent="Circular"]
+position = Vector2(-13, 219)
+rotation = -5.08714
+scale = Vector2(0.85, 1)
+texture = ExtResource("3_yon4i")
+offset = Vector2(-106, 4)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_j4owe")
+}
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

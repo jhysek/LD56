@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dd5r65nviv8nj"]
+[gd_scene load_steps=21 format=3 uid="uid://dd5r65nviv8nj"]
 
 [ext_resource type="Script" path="res://Components/Player/player.gd" id="1_pvmcb"]
 [ext_resource type="Script" path="res://Components/Player/Resources/behavior_resource.gd" id="2_lnp6x"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bnl5v16it14ct" path="res://Components/Player/Spider/leg_down.png" id="5_8pmmo"]
 [ext_resource type="Texture2D" uid="uid://bshyya67nsvrm" path="res://Components/Player/Spider/slash.png" id="6_w4o4n"]
 [ext_resource type="Texture2D" uid="uid://y7fghr4hq2v3" path="res://Components/Player/Spider/booster.png" id="7_5165f"]
+[ext_resource type="AudioStream" uid="uid://boakyox731juk" path="res://Components/Player/sfx/boost.wav" id="8_gdejw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kgxca"]
 radius = 85.0
@@ -409,6 +410,18 @@ tracks/11/keys = {
 "update": 0,
 "values": [1.0]
 }
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Visual:modulate")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_u0sl6"]
 resource_name = "WalkLeft"
@@ -708,8 +721,36 @@ tracks/11/keys = {
 "values": [2.0]
 }
 
+[sub_resource type="Animation" id="Animation_evgku"]
+resource_name = "FadeOut"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visual:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(0.233258, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.01, 0.1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visual:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(0.233258, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qdjah"]
 _data = {
+"FadeOut": SubResource("Animation_evgku"),
 "Idle": SubResource("Animation_4egoy"),
 "Jump": SubResource("Animation_3ov1x"),
 "RESET": SubResource("Animation_jvoso"),
@@ -898,6 +939,7 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody2D" groups=["GravityBody", "Killable"]]
+light_mask = 2
 collision_layer = 2
 up_direction = Vector2(0, 1)
 floor_stop_on_slope = false
@@ -913,6 +955,7 @@ shape = SubResource("CapsuleShape2D_kgxca")
 [node name="Visual" type="Node2D" parent="."]
 
 [node name="Body" type="Sprite2D" parent="Visual"]
+light_mask = 2
 texture = ExtResource("3_c67rs")
 
 [node name="Leg1" type="Sprite2D" parent="Visual/Body"]
@@ -1024,6 +1067,10 @@ texture = ExtResource("7_5165f")
 texture_scale = 1.5
 
 [node name="Sfx" type="Node" parent="."]
+
+[node name="Boost" type="AudioStreamPlayer" parent="Sfx"]
+stream = ExtResource("8_gdejw")
+volume_db = -7.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

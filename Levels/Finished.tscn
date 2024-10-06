@@ -1,0 +1,144 @@
+[gd_scene load_steps=16 format=3 uid="uid://bqpeh0scwx7fe"]
+
+[ext_resource type="Script" path="res://menu.gd" id="1_72ia7"]
+[ext_resource type="Texture2D" uid="uid://b8t4brxv1xj6x" path="res://Assets/bg.png" id="2_80jm0"]
+[ext_resource type="PackedScene" uid="uid://dsour1luye00u" path="res://Components/Arena/arena.tscn" id="3_xb8cu"]
+[ext_resource type="Texture2D" uid="uid://t0ra2jy2jopq" path="res://Assets/mask2.png" id="4_36t7h"]
+[ext_resource type="PackedScene" uid="uid://dd5r65nviv8nj" path="res://Components/Player/player.tscn" id="5_pvvyk"]
+[ext_resource type="Script" path="res://Components/Player/Resources/behavior_resource.gd" id="6_fx33x"]
+[ext_resource type="PackedScene" uid="uid://da4hulvgjj6pk" path="res://Components/Fog/Fog.tscn" id="7_upnml"]
+[ext_resource type="PackedScene" uid="uid://d4g312fn0bvrl" path="res://Components/Vignette/vignette.tscn" id="8_w0dfd"]
+[ext_resource type="PackedScene" uid="uid://sojhanv8dusj" path="res://Components/WorldEnvironment/world_environment.tscn" id="9_7fvep"]
+[ext_resource type="Theme" uid="uid://br3smno0fpler" path="res://Assets/theme.tres" id="10_ftmku"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_hswkj"]
+blend_mode = 3
+
+[sub_resource type="Shader" id="25"]
+code = "shader_type canvas_item;
+//render_mode unshaded; // optional
+
+// Noise texture
+uniform sampler2D noise_texture: repeat_enable, filter_nearest;
+// Fog density
+uniform float density: hint_range(0.0, 1.0) = 0.25;
+// Fog speed
+uniform vec2 speed = vec2(0.02, 0.01);
+
+
+// Called for every pixel the material is visible on
+void fragment() {
+	// Make the fog slowly move
+	vec2 uv = UV + speed * TIME;
+	// Sample the noise texture
+	float noise = texture(noise_texture, uv).r;
+	// Convert the noise from the (0.0, 1.0) range to the (-1.0, 1.0) range
+	// and clamp it between 0.0 and 1.0 again
+	float fog = clamp(noise * 2.0 - 1.0, 0.0, 1.0);
+	// Apply the fog effect
+	COLOR.a *= fog * density;
+}
+"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_qhxpw"]
+noise_type = 4
+frequency = 0.005
+domain_warp_enabled = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_swpfk"]
+seamless = true
+noise = SubResource("FastNoiseLite_qhxpw")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j0dj6"]
+shader = SubResource("25")
+shader_parameter/density = 0.068
+shader_parameter/speed = Vector2(0, 0.2)
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_swpfk")
+
+[node name="Finished" type="Node2D"]
+script = ExtResource("1_72ia7")
+metadata/_edit_vertical_guides_ = [-2225.0]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.22, 0.22)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+modulate = Color(0.21, 0.21, 0.21, 1)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1004.0
+offset_top = -997.0
+offset_right = 996.0
+offset_bottom = 1003.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(1000, 1000)
+mouse_filter = 2
+texture = ExtResource("2_80jm0")
+stretch_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Arena" parent="." instance=ExtResource("3_xb8cu")]
+position = Vector2(794, 0)
+
+[node name="Mask" type="Sprite2D" parent="Arena"]
+modulate = Color(1, 1, 1, 0.980392)
+show_behind_parent = true
+material = SubResource("CanvasItemMaterial_hswkj")
+position = Vector2(-480, 11)
+scale = Vector2(6.326, 4)
+texture = ExtResource("4_36t7h")
+
+[node name="Player" parent="Arena" instance=ExtResource("5_pvvyk")]
+position = Vector2(66, 864)
+behaviors = Array[ExtResource("6_fx33x")]([])
+state = 0
+
+[node name="Screen" type="CanvasLayer" parent="."]
+
+[node name="Fog" parent="Screen" instance=ExtResource("7_upnml")]
+material = SubResource("ShaderMaterial_j0dj6")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Vignette" parent="Screen" instance=ExtResource("8_w0dfd")]
+
+[node name="WorldEnvironment" parent="." instance=ExtResource("9_7fvep")]
+
+[node name="Title" type="Label" parent="."]
+offset_left = -2232.0
+offset_top = -1044.0
+offset_right = -1283.0
+offset_bottom = -779.0
+theme = ExtResource("10_ftmku")
+theme_override_font_sizes/font_size = 200
+text = "DONE"
+
+[node name="ToMenu" type="Button" parent="."]
+offset_left = -2224.0
+offset_top = 1077.0
+offset_right = -1308.0
+offset_bottom = 1278.0
+theme = ExtResource("10_ftmku")
+text = "BACK   TO   MENU"
+
+[node name="Player" parent="." node_paths=PackedStringArray("game") instance=ExtResource("5_pvvyk")]
+position = Vector2(301, -759)
+rotation = 2.58157
+scale = Vector2(0.5, 0.5)
+skin = "Wasp"
+behaviors = Array[ExtResource("6_fx33x")]([])
+state = 0
+game = NodePath("..")
+
+[connection signal="pressed" from="ToMenu" to="." method="_on_to_menu_pressed"]

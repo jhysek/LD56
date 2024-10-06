@@ -10,9 +10,12 @@ enum State {
 	DEAD
 }
 
+signal killed(who)
+
 @export var behaviors: Array[BehaviorResource];
 @export var state: State = State.IDLE;
 @export var game: Node2D
+@export var health = 4
 @onready var anim = $AnimationPlayer
 
 
@@ -22,6 +25,7 @@ var gravity_velocity = Vector2.ZERO
 var speed_damping = 1
 var gravity_direction = -1
 var direction = 1
+
 
 var partial_velocities = {
 	gravity = Vector2(0,0),
@@ -47,8 +51,6 @@ func _physics_process(delta):
 	if !grounded:
 		velocity += partial_velocities.gravity
 
-	velocity += partial_velocities.jumping
-
 	if grounded:
 		if partial_velocities.walking == Vector2.ZERO:
 			velocity = Vector2.ZERO
@@ -56,6 +58,8 @@ func _physics_process(delta):
 			velocity = partial_velocities.walking
 	else:
 		velocity += partial_velocities.walking * 0.1
+
+	velocity += partial_velocities.jumping
 
 	move_and_slide()
 	velocity = get_real_velocity()
@@ -88,3 +92,14 @@ func disable_behavior(resource_name):
 func animate(anim_name, force = false):
 	if anim.current_animation != anim_name or force:
 		anim.play(anim_name)
+
+func hit():
+	health -= 1
+	print("HIT! current health: ", health)
+	if health <= 0:
+		die()
+
+func die():
+	emit_signal('killed', self)
+	print("DEAD....")
+	queue_free()
