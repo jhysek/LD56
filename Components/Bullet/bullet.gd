@@ -9,6 +9,9 @@ var shooter
 var fired = false
 var blink_timeout = 0.2
 
+var Explosion = load("res://Components/Explosion/explosion.tscn")
+var HitParticle = load("res://Components/HitParticle/hit_particle.tscn")
+
 func set_explosive():
 	explosive = true
 	$Visual/Sprite.texture = load("res://Components/Bullet/explosive.png")
@@ -51,21 +54,27 @@ func hit_body(body):
 	if body == shooter and self_kill_cooldown > 0:
 		return
 
-	explode()
 	body.hit()
 
 func hit_wall():
 	if explosive:
-			explode()
+		explode()
 
 	if bounces <= 0:
 		queue_free()
-		# TODO explode
+		var hit = HitParticle.instantiate()
+		get_node("/root/Game").add_child(hit)
+		hit.position = global_position
+		hit.emitting = true
 	else:
 		bounces -= 1
 		bounce()
 
 func explode():
+	var explosion = Explosion.instantiate()
+	get_node("/root/Game").add_child(explosion)
+	explosion.position = global_position
+	explosion.boom()
 	queue_free()
 
 func bounce():

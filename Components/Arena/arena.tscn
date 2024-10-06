@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dsour1luye00u"]
+[gd_scene load_steps=11 format=3 uid="uid://dsour1luye00u"]
 
 [ext_resource type="Script" path="res://Components/Arena/arena.gd" id="1_heccx"]
 [ext_resource type="Texture2D" uid="uid://c5p75vs13nxta" path="res://Assets/portal.png" id="2_4848d"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://uc8pcapv6hre" path="res://Components/Island/island.tscn" id="4_uasy4"]
 [ext_resource type="Texture2D" uid="uid://bxxajreu48ji7" path="res://Assets/light.png" id="5_b2wu2"]
 [ext_resource type="PackedScene" uid="uid://c2hap6qtscjon" path="res://Components/Exit/exit.tscn" id="7_8yi6h"]
+[ext_resource type="PackedScene" uid="uid://d2pt0n8usjbjo" path="res://Components/Obstacle/obstacle.tscn" id="8_4o6m2"]
 [ext_resource type="Theme" uid="uid://br3smno0fpler" path="res://Assets/theme.tres" id="8_gja71"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_phjce"]
@@ -69,6 +70,18 @@ color = Color(1, 0, 1, 1)
 energy = 2.0
 texture = ExtResource("5_b2wu2")
 texture_scale = 2.0
+
+[node name="Obstacle" parent="RotatingLayer" instance=ExtResource("8_4o6m2")]
+position = Vector2(422, 136)
+rotation = 0.306307
+
+[node name="Obstacle2" parent="RotatingLayer" instance=ExtResource("8_4o6m2")]
+position = Vector2(-209, -389)
+rotation = -2.05945
+
+[node name="Obstacle3" parent="RotatingLayer" instance=ExtResource("8_4o6m2")]
+position = Vector2(-270, 370)
+rotation = -4.10274
 
 [node name="Level" type="Label" parent="."]
 modulate = Color(1, 1, 1, 0.192157)

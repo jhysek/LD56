@@ -30,7 +30,6 @@ func close():
 	$AnimationPlayer.play_backwards("Open")
 	$Border/Indicator.modulate = Color("ff0ffb")
 
-
 func _on_body_entered(body: Node2D) -> void:
 	if opened and body.name == "Player":
 		print("DONE")

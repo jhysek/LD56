@@ -1,8 +1,9 @@
-[gd_scene load_steps=38 format=3 uid="uid://sxg4f0pynjqt"]
+[gd_scene load_steps=39 format=3 uid="uid://sxg4f0pynjqt"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_u2ruu"]
 [ext_resource type="Texture2D" uid="uid://b8t4brxv1xj6x" path="res://Assets/bg.png" id="2_yc8ju"]
 [ext_resource type="Texture2D" uid="uid://cral1e2r6dvny" path="res://Assets/mask.png" id="3_7uap0"]
+[ext_resource type="Script" path="res://camera_2d.gd" id="3_qwfqy"]
 [ext_resource type="PackedScene" uid="uid://dsour1luye00u" path="res://Components/Arena/arena.tscn" id="4_txhye"]
 [ext_resource type="PackedScene" uid="uid://dd5r65nviv8nj" path="res://Components/Player/player.tscn" id="5_d8p8e"]
 [ext_resource type="Script" path="res://Components/Player/Resources/behavior_resource.gd" id="6_noq7y"]
@@ -32,7 +33,7 @@ GRAVITY_FORCE = 4900
 FLYING = false
 enabled = true
 
-[sub_resource type="Resource" id="Resource_8ehnt"]
+[sub_resource type="Resource" id="Resource_1t41a"]
 resource_local_to_scene = true
 resource_name = "jump"
 script = ExtResource("8_lam1p")
@@ -41,14 +42,14 @@ DOUBLE_JUMP_SPEED = 3000
 DOUBLE_JUMP = true
 enabled = true
 
-[sub_resource type="Resource" id="Resource_ooodl"]
+[sub_resource type="Resource" id="Resource_1gpl4"]
 resource_local_to_scene = true
 resource_name = "walk"
 script = ExtResource("9_tccoe")
 WALK_SPEED = 50000
 enabled = true
 
-[sub_resource type="Resource" id="Resource_exs53"]
+[sub_resource type="Resource" id="Resource_8ce2m"]
 resource_local_to_scene = true
 resource_name = "attack"
 script = ExtResource("10_b8c6q")
@@ -113,7 +114,7 @@ shader_parameter/density = 0.068
 shader_parameter/speed = Vector2(0, 0.2)
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_n6e4x")
 
-[sub_resource type="Resource" id="Resource_7vt0n"]
+[sub_resource type="Resource" id="Resource_bbmed"]
 resource_local_to_scene = true
 resource_name = "body"
 script = ExtResource("7_xg6c2")
@@ -168,6 +169,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.26, 0.26)
+script = ExtResource("3_qwfqy")
 
 [node name="Mask" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.980392)
@@ -182,7 +184,7 @@ texture = ExtResource("3_7uap0")
 position = Vector2(282, -107)
 rotation = 0.00755271
 scale = Vector2(0.4, 0.4)
-behaviors = Array[ExtResource("6_noq7y")]([SubResource("Resource_rqud0"), SubResource("Resource_8ehnt"), SubResource("Resource_ooodl"), SubResource("Resource_exs53"), SubResource("Resource_8b8kd")])
+behaviors = Array[ExtResource("6_noq7y")]([SubResource("Resource_rqud0"), SubResource("Resource_1t41a"), SubResource("Resource_1gpl4"), SubResource("Resource_8ce2m"), SubResource("Resource_8b8kd")])
 game = NodePath("..")
 
 [node name="JumpAttackWeapon" type="Area2D" parent="Player"]
@@ -265,7 +267,7 @@ light_mask = 1
 position = Vector2(-559, 8)
 is_enemy = true
 skin = "Scorpio"
-behaviors = Array[ExtResource("6_noq7y")]([SubResource("Resource_7vt0n"), SubResource("Resource_jfwio"), SubResource("Resource_v31sb"), SubResource("Resource_ldyxh")])
+behaviors = Array[ExtResource("6_noq7y")]([SubResource("Resource_bbmed"), SubResource("Resource_jfwio"), SubResource("Resource_v31sb"), SubResource("Resource_ldyxh")])
 
 [node name="RotatingLayer" type="Node2D" parent="."]
 

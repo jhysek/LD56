@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2pt0n8usjbjo"]
+
+[ext_resource type="Texture2D" uid="uid://bt8mkdufb550t" path="res://Components/Obstacle/sprit.png" id="1_j2eyk"]
+
+[node name="Obstacle" type="StaticBody2D"]
+
+[node name="sprite" type="Sprite2D" parent="."]
+modulate = Color(0.613971, 0.613971, 0.613971, 1)
+texture = ExtResource("1_j2eyk")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-60, -244, -22, -260, 20, -205, 53, -128, 67, -33, 61, 60, 45, 138, 16, 208, -18, 263, -65, 246, -21, 171, 6, 69, 10, -32, -10, -142)

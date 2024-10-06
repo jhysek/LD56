@@ -226,9 +226,9 @@ texture = ExtResource("3_yon4i")
 offset = Vector2(-106, 4)
 
 [node name="IrisPlate6" type="Sprite2D" parent="Circular"]
-position = Vector2(-13, 219)
+position = Vector2(-14, 234)
 rotation = -5.08714
-scale = Vector2(0.85, 1)
+scale = Vector2(0.9, 1)
 texture = ExtResource("3_yon4i")
 offset = Vector2(-106, 4)
 

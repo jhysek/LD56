@@ -25,6 +25,9 @@ func _ready() -> void:
 		enemies.append(enemy)
 		print("> connecting: ", enemy.name)
 		enemy.killed.connect(_on_enemy_killed)
+
+	$Player.hitted.connect(_on_player_hit)
+	$Player.killed.connect(_on_player_killed)
 	update_enemy_counter()
 	start_wave()
 
@@ -69,9 +72,18 @@ func spawn(enemy_scene):
 
 func _on_enemy_killed(enemy):
 	enemies.erase(enemy)
+	$Camera2D.shake(0.5, 50, 20)
 	update_enemy_counter()
 	if enemies.size() <= 0:
 		open_exit()
+
+func _on_player_killed():
+	$Camera2D.shake(1, 50, 50)
+	# TODO: restart level
+
+func _on_player_hit(bealth):
+	$Camera2D.shake(0.5, 50, 20)
+	# TODO: update health bar
 
 func _on_jump_attack_weapon_area_entered(area: Area2D) -> void:
 	if area.is_in_group("Enemy"):

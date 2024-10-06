@@ -2,6 +2,7 @@ class_name BehaviorCharacter
 extends CharacterBody2D
 
 var BehaviorResource = load("res://Components/Player/Resources/BehaviorResource.gd")
+var Explosion = load("res://Components/Explosion/explosion.tscn")
 
 enum State {
 	STATIC,
@@ -11,13 +12,13 @@ enum State {
 }
 
 signal killed(who)
+signal hitted(health)
 
 @export var behaviors: Array[BehaviorResource];
 @export var state: State = State.IDLE;
 @export var game: Node2D
-@export var health = 4
+@export var health = 1
 @onready var anim = $AnimationPlayer
-
 
 var gravity_normalized: Vector2
 var grounded: bool = false
@@ -25,7 +26,6 @@ var gravity_velocity = Vector2.ZERO
 var speed_damping = 1
 var gravity_direction = -1
 var direction = 1
-
 
 var partial_velocities = {
 	gravity = Vector2(0,0),
@@ -96,10 +96,20 @@ func animate(anim_name, force = false):
 func hit():
 	health -= 1
 	print("HIT! current health: ", health)
+
 	if health <= 0:
 		die()
+	else:
+		emit_signal('hitted', health)
 
 func die():
+	explode()
 	emit_signal('killed', self)
-	print("DEAD....")
+	queue_free()
+
+func explode():
+	var explosion = Explosion.instantiate()
+	get_node("/root/Game").add_child(explosion)
+	explosion.position = global_position
+	explosion.boom()
 	queue_free()
