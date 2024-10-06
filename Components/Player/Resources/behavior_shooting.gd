@@ -26,7 +26,7 @@ func fire():
 				# Fire UP
 		if SHOOTING_UP:
 			bullet.bounces = 5
-			bullet.fire(character.gravity_normalized * -1)
+			bullet.fire(character.gravity_normalized)
 		else:
 			# Fire in front
 			bullet.bounces = 0

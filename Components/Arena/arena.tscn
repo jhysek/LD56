@@ -92,3 +92,9 @@ offset_bottom = -1041.0
 theme = ExtResource("8_gja71")
 theme_override_font_sizes/font_size = 100
 text = "Level   01"
+
+[node name="ExitOpenTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="timeout" from="ExitOpenTimer" to="." method="_on_exit_open_timer_timeout"]

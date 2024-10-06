@@ -55,6 +55,7 @@ func hit_body(body):
 		return
 
 	body.hit()
+	queue_free()
 
 func hit_wall():
 	if explosive:

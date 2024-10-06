@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://04hru8txbvtb"]
+[gd_scene load_steps=36 format=3 uid="uid://04hru8txbvtb"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_71gos"]
 [ext_resource type="Texture2D" uid="uid://b8t4brxv1xj6x" path="res://Assets/bg.png" id="2_8jkxi"]
@@ -18,10 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://d4g312fn0bvrl" path="res://Components/Vignette/vignette.tscn" id="15_h4x5a"]
 [ext_resource type="Texture2D" uid="uid://dvkdlvqssrxob" path="res://Components/Player/Wasp/icon.png" id="16_fms7q"]
 [ext_resource type="PackedScene" uid="uid://cw1n70g6sm5xn" path="res://Components/Enemies/enemy_walker.tscn" id="17_wab7n"]
-[ext_resource type="Script" path="res://Components/Player/Resources/enemy_shooting.gd" id="18_226wq"]
 [ext_resource type="Script" path="res://Components/Player/Resources/enemy_walking.gd" id="19_fl57t"]
-[ext_resource type="Script" path="res://Components/Player/Resources/enemy_jumping.gd" id="20_yyui8"]
-[ext_resource type="PackedScene" uid="uid://b2kmedoumd5l3" path="res://Components/Player/Sentinel/sentinel.tscn" id="21_7cwjy"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jwp14"]
 blend_mode = 3
@@ -33,7 +30,7 @@ GRAVITY_FORCE = 4900
 FLYING = false
 enabled = true
 
-[sub_resource type="Resource" id="Resource_5s5om"]
+[sub_resource type="Resource" id="Resource_26eqa"]
 resource_local_to_scene = true
 resource_name = "jump"
 script = ExtResource("8_4i5mb")
@@ -42,14 +39,14 @@ DOUBLE_JUMP_SPEED = 3000
 DOUBLE_JUMP = true
 enabled = true
 
-[sub_resource type="Resource" id="Resource_u1g0n"]
+[sub_resource type="Resource" id="Resource_l2qfi"]
 resource_local_to_scene = true
 resource_name = "walk"
 script = ExtResource("9_xorwh")
 WALK_SPEED = 50000
 enabled = true
 
-[sub_resource type="Resource" id="Resource_fmf0b"]
+[sub_resource type="Resource" id="Resource_cs4b0"]
 resource_local_to_scene = true
 resource_name = "attack"
 script = ExtResource("10_ih0in")
@@ -114,20 +111,12 @@ shader_parameter/density = 0.068
 shader_parameter/speed = Vector2(0, 0.2)
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_n6e4x")
 
-[sub_resource type="Resource" id="Resource_3yv2m"]
+[sub_resource type="Resource" id="Resource_4ca2i"]
 resource_local_to_scene = true
 resource_name = "body"
 script = ExtResource("7_wtt7p")
 GRAVITY_FORCE = 4900
 FLYING = false
-enabled = true
-
-[sub_resource type="Resource" id="Resource_jfwio"]
-resource_name = "shoot"
-script = ExtResource("18_226wq")
-SHOOTING_UP = true
-SHOOTING_DOWN = false
-delay = 2.5
 enabled = true
 
 [sub_resource type="Resource" id="Resource_v31sb"]
@@ -137,10 +126,21 @@ FLYING = false
 should_walk_left = false
 enabled = true
 
-[sub_resource type="Resource" id="Resource_ldyxh"]
-script = ExtResource("20_yyui8")
-delay = 2
-jump_speed = 3000
+[sub_resource type="Resource" id="Resource_xdu7b"]
+resource_local_to_scene = true
+resource_name = "body"
+script = ExtResource("7_wtt7p")
+GRAVITY_FORCE = 4900
+FLYING = false
+enabled = true
+
+[sub_resource type="Resource" id="Resource_w1e2j"]
+resource_local_to_scene = true
+resource_name = "walking"
+script = ExtResource("19_fl57t")
+WALK_SPEED = 30000
+FLYING = false
+should_walk_left = false
 enabled = true
 
 [node name="Game" type="Node2D"]
@@ -179,12 +179,13 @@ scale = Vector2(5.29, 4)
 texture = ExtResource("3_qdesx")
 
 [node name="Arena" parent="." instance=ExtResource("4_jn1te")]
+ISLAND = false
 
 [node name="Player" parent="." node_paths=PackedStringArray("game") instance=ExtResource("5_7ygtb")]
-position = Vector2(282, -107)
+position = Vector2(5, 906)
 rotation = 0.00755271
 scale = Vector2(0.4, 0.4)
-behaviors = Array[ExtResource("6_r40u1")]([SubResource("Resource_rqud0"), SubResource("Resource_5s5om"), SubResource("Resource_u1g0n"), SubResource("Resource_fmf0b"), SubResource("Resource_8b8kd")])
+behaviors = Array[ExtResource("6_r40u1")]([SubResource("Resource_rqud0"), SubResource("Resource_26eqa"), SubResource("Resource_l2qfi"), SubResource("Resource_cs4b0"), SubResource("Resource_8b8kd")])
 game = NodePath("..")
 
 [node name="JumpAttackWeapon" type="Area2D" parent="Player"]
@@ -264,19 +265,46 @@ texture = ExtResource("16_fms7q")
 
 [node name="EnemyWalker" parent="." instance=ExtResource("17_wab7n")]
 light_mask = 1
-position = Vector2(-559, 8)
+position = Vector2(-862, 6)
 is_enemy = true
-skin = "Scorpio"
-behaviors = Array[ExtResource("6_r40u1")]([SubResource("Resource_3yv2m"), SubResource("Resource_jfwio"), SubResource("Resource_v31sb"), SubResource("Resource_ldyxh")])
+skin = "Wasp"
+behaviors = Array[ExtResource("6_r40u1")]([SubResource("Resource_4ca2i"), SubResource("Resource_v31sb")])
 
 [node name="RotatingLayer" type="Node2D" parent="."]
+visible = false
 
-[node name="Sentinel" parent="RotatingLayer" groups=["Enemy"] instance=ExtResource("21_7cwjy")]
-position = Vector2(-503, 416)
+[node name="ResetTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="EnemyWalker2" parent="." instance=ExtResource("17_wab7n")]
+is_enemy = true
+skin = "Wasp"
+behaviors = Array[ExtResource("6_r40u1")]([SubResource("Resource_xdu7b"), SubResource("Resource_w1e2j")])
+
+[node name="Label3" type="Label" parent="."]
+offset_left = 1330.0
+offset_top = -320.0
+offset_right = 2086.0
+offset_bottom = -51.0
+theme = ExtResource("12_28kkr")
+text = "ELIMINATE    ENEMIES
+TO    OPEN    EXIT"
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 1322.0
+offset_top = 50.0
+offset_right = 1985.0
+offset_bottom = 397.0
+theme = ExtResource("12_28kkr")
+theme_override_font_sizes/font_size = 50
+text = "SHOOT   THEM  OR
+JUMP   ON   THEM
+
+DON'T   LET  THEM   TOUCH   YOU"
 
 [connection signal="body_entered" from="Player/JumpAttackWeapon" to="Player" method="_on_jump_attack_weapon_body_entered"]
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timeout"]
 [connection signal="timeout" from="WaveTimer" to="." method="_on_wave_timer_timeout"]
-[connection signal="killed" from="RotatingLayer/Sentinel" to="." method="_on_enemy_killed"]
+[connection signal="timeout" from="ResetTimer" to="." method="_on_reset_timer_timeout"]
 
 [editable path="WorldEnvironment"]

@@ -14,21 +14,13 @@ func _process(delta):
 		$Hole.rotate(delta * -10)
 		return
 
-func switch_color():
-	if $Border/Indicator.modulate == Color("ffffff"):
-		$Border/Indicator.modulate = Color("ff0ffb")
-	else:
-		$Border/Indicator.modulate = Color("ffffff")
-
 func open():
 	opened = true
 	$AnimationPlayer.play("Open")
-	$Border/Indicator.modulate = Color("72b500")
 
 func close():
 	opened = false
 	$AnimationPlayer.play_backwards("Open")
-	$Border/Indicator.modulate = Color("ff0ffb")
 
 func _on_body_entered(body: Node2D) -> void:
 	if opened and body.name == "Player":

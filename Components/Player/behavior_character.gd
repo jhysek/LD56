@@ -103,13 +103,14 @@ func hit():
 		emit_signal('hitted', health)
 
 func die():
-	explode()
 	emit_signal('killed', self)
-	queue_free()
+	print("DEAD")
+	explode()
+	state = State.DEAD
+	hide()
 
 func explode():
 	var explosion = Explosion.instantiate()
 	get_node("/root/Game").add_child(explosion)
 	explosion.position = global_position
 	explosion.boom()
-	queue_free()

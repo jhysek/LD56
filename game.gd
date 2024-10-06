@@ -77,13 +77,14 @@ func _on_enemy_killed(enemy):
 	if enemies.size() <= 0:
 		open_exit()
 
-func _on_player_killed():
+func _on_player_killed(who):
 	$Camera2D.shake(1, 50, 50)
-	# TODO: restart level
+
+	if has_node('ResetTimer'):
+		$ResetTimer.start()
 
 func _on_player_hit(bealth):
 	$Camera2D.shake(0.5, 50, 20)
-	# TODO: update health bar
 
 func _on_jump_attack_weapon_area_entered(area: Area2D) -> void:
 	if area.is_in_group("Enemy"):
@@ -94,3 +95,6 @@ func update_enemy_counter():
 
 func open_exit():
 	$Arena.open_exit()
+
+func _on_reset_timer_timeout() -> void:
+	LevelSwitcher.restart_level()

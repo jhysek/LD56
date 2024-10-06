@@ -3,6 +3,7 @@ extends BehaviorResource
 
 @export var SHOOTING_UP = true
 @export var SHOOTING_DOWN = false
+@export var EXPLODING = false
 
 var Bullet = load("res://Components/Bullet/bullet.tscn")
 
@@ -37,6 +38,9 @@ func fire():
 		bullet.set_explosive()
 		bullet.fire(character.gravity_normalized.rotated(character.get_parent().rotation + PI))
 		return
+
+	if EXPLODING:
+		bullet.set_explosive()
 
 	if character.gravity_direction == -1:
 		# Fire UP

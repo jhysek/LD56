@@ -20,8 +20,6 @@
 [ext_resource type="PackedScene" uid="uid://cw1n70g6sm5xn" path="res://Components/Enemies/enemy_walker.tscn" id="17_pkm01"]
 [ext_resource type="Script" path="res://Components/Player/Resources/enemy_shooting.gd" id="18_px2o6"]
 [ext_resource type="Script" path="res://Components/Player/Resources/enemy_walking.gd" id="19_gncnp"]
-[ext_resource type="Script" path="res://Components/Player/Resources/enemy_jumping.gd" id="20_cm26x"]
-[ext_resource type="PackedScene" uid="uid://b2kmedoumd5l3" path="res://Components/Player/Sentinel/sentinel.tscn" id="21_rmanc"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jwp14"]
 blend_mode = 3
@@ -33,7 +31,7 @@ GRAVITY_FORCE = 4900
 FLYING = false
 enabled = true
 
-[sub_resource type="Resource" id="Resource_1t41a"]
+[sub_resource type="Resource" id="Resource_spejv"]
 resource_local_to_scene = true
 resource_name = "jump"
 script = ExtResource("8_lam1p")
@@ -42,14 +40,14 @@ DOUBLE_JUMP_SPEED = 3000
 DOUBLE_JUMP = true
 enabled = true
 
-[sub_resource type="Resource" id="Resource_1gpl4"]
+[sub_resource type="Resource" id="Resource_84xg7"]
 resource_local_to_scene = true
 resource_name = "walk"
 script = ExtResource("9_tccoe")
 WALK_SPEED = 50000
 enabled = true
 
-[sub_resource type="Resource" id="Resource_8ce2m"]
+[sub_resource type="Resource" id="Resource_bt1a0"]
 resource_local_to_scene = true
 resource_name = "attack"
 script = ExtResource("10_b8c6q")
@@ -114,7 +112,7 @@ shader_parameter/density = 0.068
 shader_parameter/speed = Vector2(0, 0.2)
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_n6e4x")
 
-[sub_resource type="Resource" id="Resource_bbmed"]
+[sub_resource type="Resource" id="Resource_q2y5e"]
 resource_local_to_scene = true
 resource_name = "body"
 script = ExtResource("7_xg6c2")
@@ -127,20 +125,40 @@ resource_name = "shoot"
 script = ExtResource("18_px2o6")
 SHOOTING_UP = true
 SHOOTING_DOWN = false
-delay = 2.5
+EXPLODING = false
+delay = 5.0
 enabled = true
 
 [sub_resource type="Resource" id="Resource_v31sb"]
 script = ExtResource("19_gncnp")
-WALK_SPEED = 30000
+WALK_SPEED = 20000
 FLYING = false
 should_walk_left = false
 enabled = true
 
-[sub_resource type="Resource" id="Resource_ldyxh"]
-script = ExtResource("20_cm26x")
-delay = 2
-jump_speed = 3000
+[sub_resource type="Resource" id="Resource_47ajs"]
+resource_local_to_scene = true
+resource_name = "body"
+script = ExtResource("7_xg6c2")
+GRAVITY_FORCE = 4900
+FLYING = false
+enabled = true
+
+[sub_resource type="Resource" id="Resource_7wvey"]
+resource_local_to_scene = true
+resource_name = "walking"
+script = ExtResource("19_gncnp")
+WALK_SPEED = 15000
+FLYING = false
+should_walk_left = true
+enabled = true
+
+[sub_resource type="Resource" id="Resource_72axx"]
+script = ExtResource("18_px2o6")
+SHOOTING_UP = true
+SHOOTING_DOWN = false
+EXPLODING = false
+delay = 4.0
 enabled = true
 
 [node name="Game" type="Node2D"]
@@ -181,10 +199,10 @@ texture = ExtResource("3_7uap0")
 [node name="Arena" parent="." instance=ExtResource("4_txhye")]
 
 [node name="Player" parent="." node_paths=PackedStringArray("game") instance=ExtResource("5_d8p8e")]
-position = Vector2(282, -107)
+position = Vector2(11, 910)
 rotation = 0.00755271
 scale = Vector2(0.4, 0.4)
-behaviors = Array[ExtResource("6_noq7y")]([SubResource("Resource_rqud0"), SubResource("Resource_1t41a"), SubResource("Resource_1gpl4"), SubResource("Resource_8ce2m"), SubResource("Resource_8b8kd")])
+behaviors = Array[ExtResource("6_noq7y")]([SubResource("Resource_rqud0"), SubResource("Resource_spejv"), SubResource("Resource_84xg7"), SubResource("Resource_bt1a0"), SubResource("Resource_8b8kd")])
 game = NodePath("..")
 
 [node name="JumpAttackWeapon" type="Area2D" parent="Player"]
@@ -264,19 +282,25 @@ texture = ExtResource("16_l27bn")
 
 [node name="EnemyWalker" parent="." instance=ExtResource("17_pkm01")]
 light_mask = 1
-position = Vector2(-559, 8)
+position = Vector2(1, -895)
 is_enemy = true
-skin = "Scorpio"
-behaviors = Array[ExtResource("6_noq7y")]([SubResource("Resource_bbmed"), SubResource("Resource_jfwio"), SubResource("Resource_v31sb"), SubResource("Resource_ldyxh")])
+skin = "Wasp"
+behaviors = Array[ExtResource("6_noq7y")]([SubResource("Resource_q2y5e"), SubResource("Resource_jfwio"), SubResource("Resource_v31sb")])
 
 [node name="RotatingLayer" type="Node2D" parent="."]
+visible = false
 
-[node name="Sentinel" parent="RotatingLayer" groups=["Enemy"] instance=ExtResource("21_rmanc")]
-position = Vector2(-503, 416)
+[node name="EnemyWalker2" parent="." instance=ExtResource("17_pkm01")]
+position = Vector2(9, -380)
+skin = "Wasp"
+behaviors = Array[ExtResource("6_noq7y")]([SubResource("Resource_47ajs"), SubResource("Resource_7wvey"), SubResource("Resource_72axx")])
+
+[node name="ResetTimer" type="Timer" parent="."]
+one_shot = true
 
 [connection signal="body_entered" from="Player/JumpAttackWeapon" to="Player" method="_on_jump_attack_weapon_body_entered"]
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timeout"]
 [connection signal="timeout" from="WaveTimer" to="." method="_on_wave_timer_timeout"]
-[connection signal="killed" from="RotatingLayer/Sentinel" to="." method="_on_enemy_killed"]
+[connection signal="timeout" from="ResetTimer" to="." method="_on_reset_timer_timeout"]
 
 [editable path="WorldEnvironment"]

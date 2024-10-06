@@ -1,6 +1,8 @@
 extends Node2D
 
 @export var PORTAL_ROTATION_SPEED = 3
+@export var EXIT_OPENED = false
+@export var HIDE_LEVEL = false
 @export var OBSTACLES = false
 @export var ISLAND = true
 
@@ -9,13 +11,18 @@ extends Node2D
 @onready var spawner = $Center/Spawner
 
 func _ready():
-	$Level.text = "LEVEL   0" + str(LevelSwitcher.current_level + 1)
+	$Level.text = "LEVEL   0" + str(LevelSwitcher.current_level)
+	if HIDE_LEVEL:
+		$Level.hide()
+
 	if !OBSTACLES:
 		$RotatingLayer/Obstacle.queue_free()
 		$RotatingLayer/Obstacle2.queue_free()
 		$RotatingLayer/Obstacle3.queue_free()
 	if !ISLAND:
 		$Island.queue_free()
+	if EXIT_OPENED:
+		$ExitOpenTimer.start()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -34,3 +41,7 @@ func close_exit():
 	if ISLAND:
 		$Island.open()
 	$Exit.close()
+
+
+func _on_exit_open_timer_timeout() -> void:
+	open_exit()

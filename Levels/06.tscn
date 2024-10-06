@@ -1,0 +1,368 @@
+[gd_scene load_steps=45 format=3 uid="uid://bmnofsxoemx3d"]
+
+[ext_resource type="Script" path="res://game.gd" id="1_wn01c"]
+[ext_resource type="Texture2D" uid="uid://b8t4brxv1xj6x" path="res://Assets/bg.png" id="2_qyur8"]
+[ext_resource type="Script" path="res://camera_2d.gd" id="3_73eub"]
+[ext_resource type="Texture2D" uid="uid://cral1e2r6dvny" path="res://Assets/mask.png" id="4_6r0p2"]
+[ext_resource type="PackedScene" uid="uid://dsour1luye00u" path="res://Components/Arena/arena.tscn" id="5_e2jtb"]
+[ext_resource type="PackedScene" uid="uid://dd5r65nviv8nj" path="res://Components/Player/player.tscn" id="6_jqe1x"]
+[ext_resource type="Script" path="res://Components/Player/Resources/behavior_resource.gd" id="7_w84wo"]
+[ext_resource type="Script" path="res://Components/Player/Resources/platformer_body.gd" id="8_3atb4"]
+[ext_resource type="Script" path="res://Components/Player/Resources/platformer_jumping.gd" id="9_fxcmo"]
+[ext_resource type="Script" path="res://Components/Player/Resources/platformer_walking.gd" id="10_r041o"]
+[ext_resource type="Script" path="res://Components/Player/Resources/behavior_attacking.gd" id="11_hcyto"]
+[ext_resource type="Script" path="res://Components/Player/Resources/behavior_shooting.gd" id="12_7wvdp"]
+[ext_resource type="Theme" uid="uid://br3smno0fpler" path="res://Assets/theme.tres" id="13_0o0x4"]
+[ext_resource type="PackedScene" uid="uid://sojhanv8dusj" path="res://Components/WorldEnvironment/world_environment.tscn" id="14_s32gp"]
+[ext_resource type="PackedScene" uid="uid://da4hulvgjj6pk" path="res://Components/Fog/Fog.tscn" id="15_bty4o"]
+[ext_resource type="PackedScene" uid="uid://d4g312fn0bvrl" path="res://Components/Vignette/vignette.tscn" id="16_o3tx3"]
+[ext_resource type="Texture2D" uid="uid://dvkdlvqssrxob" path="res://Components/Player/Wasp/icon.png" id="17_wycjn"]
+[ext_resource type="PackedScene" uid="uid://cw1n70g6sm5xn" path="res://Components/Enemies/enemy_walker.tscn" id="18_jqyoo"]
+[ext_resource type="Script" path="res://Components/Player/Resources/enemy_shooting.gd" id="19_okjv0"]
+[ext_resource type="Script" path="res://Components/Player/Resources/enemy_walking.gd" id="20_pntr7"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_jwp14"]
+blend_mode = 3
+
+[sub_resource type="Resource" id="Resource_rqud0"]
+resource_name = "body"
+script = ExtResource("8_3atb4")
+GRAVITY_FORCE = 4900
+FLYING = false
+enabled = true
+
+[sub_resource type="Resource" id="Resource_6rq4k"]
+resource_local_to_scene = true
+resource_name = "jump"
+script = ExtResource("9_fxcmo")
+JUMP_SPEED = 1500
+DOUBLE_JUMP_SPEED = 3000
+DOUBLE_JUMP = true
+enabled = true
+
+[sub_resource type="Resource" id="Resource_3m8x0"]
+resource_local_to_scene = true
+resource_name = "walk"
+script = ExtResource("10_r041o")
+WALK_SPEED = 50000
+enabled = true
+
+[sub_resource type="Resource" id="Resource_r2cvi"]
+resource_local_to_scene = true
+resource_name = "attack"
+script = ExtResource("11_hcyto")
+enabled = false
+
+[sub_resource type="Resource" id="Resource_8b8kd"]
+resource_name = "shoot"
+script = ExtResource("12_7wvdp")
+SHOOTING_UP = true
+enabled = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pbbbo"]
+size = Vector2(400, 20)
+
+[sub_resource type="Environment" id="Environment_hdpvo"]
+background_mode = 3
+tonemap_mode = 2
+glow_enabled = true
+glow_intensity = 1.51
+glow_bloom = 0.25
+adjustment_contrast = 1.18
+adjustment_saturation = 0.66
+
+[sub_resource type="Shader" id="Shader_a0w78"]
+code = "shader_type canvas_item;
+//render_mode unshaded; // optional
+
+// Noise texture
+uniform sampler2D noise_texture: repeat_enable, filter_nearest;
+// Fog density
+uniform float density: hint_range(0.0, 1.0) = 0.25;
+// Fog speed
+uniform vec2 speed = vec2(0.02, 0.01);
+
+
+// Called for every pixel the material is visible on
+void fragment() {
+	// Make the fog slowly move
+	vec2 uv = UV + speed * TIME;
+	// Sample the noise texture
+	float noise = texture(noise_texture, uv).r;
+	// Convert the noise from the (0.0, 1.0) range to the (-1.0, 1.0) range
+	// and clamp it between 0.0 and 1.0 again
+	float fog = clamp(noise * 2.0 - 1.0, 0.0, 1.0);
+	// Apply the fog effect
+	COLOR.a *= fog * density;
+}
+"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_r2esu"]
+noise_type = 4
+frequency = 0.005
+domain_warp_enabled = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_n6e4x"]
+seamless = true
+noise = SubResource("FastNoiseLite_r2esu")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pdy04"]
+shader = SubResource("Shader_a0w78")
+shader_parameter/density = 0.068
+shader_parameter/speed = Vector2(0, 0.2)
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_n6e4x")
+
+[sub_resource type="Resource" id="Resource_2l722"]
+resource_local_to_scene = true
+resource_name = "body"
+script = ExtResource("8_3atb4")
+GRAVITY_FORCE = 4900
+FLYING = false
+enabled = true
+
+[sub_resource type="Resource" id="Resource_jfwio"]
+resource_name = "shoot"
+script = ExtResource("19_okjv0")
+SHOOTING_UP = true
+SHOOTING_DOWN = false
+EXPLODING = true
+delay = 5.0
+enabled = true
+
+[sub_resource type="Resource" id="Resource_v31sb"]
+script = ExtResource("20_pntr7")
+WALK_SPEED = 30000
+FLYING = false
+should_walk_left = false
+enabled = true
+
+[sub_resource type="Resource" id="Resource_wjk2c"]
+resource_local_to_scene = true
+resource_name = "body"
+script = ExtResource("8_3atb4")
+GRAVITY_FORCE = 4900
+FLYING = false
+enabled = true
+
+[sub_resource type="Resource" id="Resource_wr54v"]
+resource_local_to_scene = true
+resource_name = "walking"
+script = ExtResource("20_pntr7")
+WALK_SPEED = 25000
+FLYING = false
+should_walk_left = true
+enabled = true
+
+[sub_resource type="Resource" id="Resource_vqpkt"]
+script = ExtResource("19_okjv0")
+SHOOTING_UP = true
+SHOOTING_DOWN = false
+EXPLODING = true
+delay = 5.0
+enabled = true
+
+[sub_resource type="Resource" id="Resource_debhb"]
+resource_local_to_scene = true
+resource_name = "body"
+script = ExtResource("8_3atb4")
+GRAVITY_FORCE = 4900
+FLYING = false
+enabled = true
+
+[sub_resource type="Resource" id="Resource_hsx0p"]
+resource_local_to_scene = true
+resource_name = "walking"
+script = ExtResource("20_pntr7")
+WALK_SPEED = 30000
+FLYING = false
+should_walk_left = false
+enabled = true
+
+[sub_resource type="Resource" id="Resource_5wkv0"]
+script = ExtResource("19_okjv0")
+SHOOTING_UP = true
+SHOOTING_DOWN = false
+EXPLODING = true
+delay = 5.0
+enabled = true
+
+[sub_resource type="Resource" id="Resource_k5nq5"]
+resource_local_to_scene = true
+resource_name = "body"
+script = ExtResource("8_3atb4")
+GRAVITY_FORCE = 4900
+FLYING = false
+enabled = true
+
+[sub_resource type="Resource" id="Resource_6phlr"]
+resource_local_to_scene = true
+resource_name = "walking"
+script = ExtResource("20_pntr7")
+WALK_SPEED = 50000
+FLYING = false
+should_walk_left = true
+enabled = true
+
+[sub_resource type="Resource" id="Resource_ctd1w"]
+script = ExtResource("19_okjv0")
+SHOOTING_UP = true
+SHOOTING_DOWN = false
+EXPLODING = true
+delay = 5.0
+enabled = true
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_wn01c")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+modulate = Color(0.21, 0.21, 0.21, 1)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1004.0
+offset_top = -997.0
+offset_right = 996.0
+offset_bottom = 1003.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(1000, 1000)
+texture = ExtResource("2_qyur8")
+stretch_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.26, 0.26)
+script = ExtResource("3_73eub")
+
+[node name="Mask" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.980392)
+material = SubResource("CanvasItemMaterial_jwp14")
+position = Vector2(38.0003, 11)
+scale = Vector2(5.29, 4)
+texture = ExtResource("4_6r0p2")
+
+[node name="Arena" parent="." instance=ExtResource("5_e2jtb")]
+OBSTACLES = true
+
+[node name="Player" parent="." node_paths=PackedStringArray("game") instance=ExtResource("6_jqe1x")]
+position = Vector2(2, -366)
+rotation = 0.00755271
+scale = Vector2(0.4, 0.4)
+behaviors = Array[ExtResource("7_w84wo")]([SubResource("Resource_rqud0"), SubResource("Resource_6rq4k"), SubResource("Resource_3m8x0"), SubResource("Resource_r2cvi"), SubResource("Resource_8b8kd")])
+game = NodePath("..")
+
+[node name="JumpAttackWeapon" type="Area2D" parent="Player"]
+collision_layer = 3
+collision_mask = 3
+input_pickable = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/JumpAttackWeapon"]
+position = Vector2(-4.39565, 80.0355)
+shape = SubResource("RectangleShape2D_pbbbo")
+debug_color = Color(0.888895, 0.000264527, 0.797713, 0.42)
+
+[node name="Debug" type="Node2D" parent="."]
+visible = false
+
+[node name="Velocity" type="Label" parent="Debug"]
+offset_left = -1606.0
+offset_top = -1363.0
+offset_right = -1145.0
+offset_bottom = -1226.0
+theme_override_font_sizes/font_size = 100
+text = "VELOCITY
+"
+
+[node name="Grounded" type="Label" parent="Debug"]
+offset_left = -1606.0
+offset_top = -1190.0
+offset_right = -1145.0
+offset_bottom = -1053.0
+theme_override_font_sizes/font_size = 100
+text = "VELOCITY
+"
+
+[node name="SpawnTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="WaveTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Info" type="Label" parent="."]
+offset_left = -862.0
+offset_top = -1417.0
+offset_right = 861.0
+offset_bottom = -1284.0
+theme = ExtResource("13_0o0x4")
+horizontal_alignment = 1
+
+[node name="WorldEnvironment" parent="." instance=ExtResource("14_s32gp")]
+environment = SubResource("Environment_hdpvo")
+
+[node name="Screen" type="CanvasLayer" parent="."]
+
+[node name="Fog" parent="Screen" instance=ExtResource("15_bty4o")]
+material = SubResource("ShaderMaterial_pdy04")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Vignette" parent="Screen" instance=ExtResource("16_o3tx3")]
+
+[node name="Enemies" type="Label" parent="Screen"]
+offset_left = 1068.0
+offset_top = 55.0
+offset_right = 1177.0
+offset_bottom = 89.0
+theme = ExtResource("13_0o0x4")
+theme_override_font_sizes/font_size = 25
+text = "0"
+
+[node name="Icon" type="Sprite2D" parent="Screen/Enemies"]
+position = Vector2(-44, 20)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("17_wycjn")
+
+[node name="EnemyWalker" parent="." instance=ExtResource("18_jqyoo")]
+light_mask = 1
+position = Vector2(-828, 12)
+is_enemy = true
+skin = "Wasp"
+behaviors = Array[ExtResource("7_w84wo")]([SubResource("Resource_2l722"), SubResource("Resource_jfwio"), SubResource("Resource_v31sb")])
+
+[node name="EnemyWalker2" parent="." instance=ExtResource("18_jqyoo")]
+position = Vector2(842, 9)
+is_enemy = true
+skin = "Wasp"
+behaviors = Array[ExtResource("7_w84wo")]([SubResource("Resource_wjk2c"), SubResource("Resource_wr54v"), SubResource("Resource_vqpkt")])
+
+[node name="RotatingLayer" type="Node2D" parent="."]
+
+[node name="EnemyWalker3" parent="." instance=ExtResource("18_jqyoo")]
+position = Vector2(-2, -898)
+is_enemy = true
+skin = "Wasp"
+behaviors = Array[ExtResource("7_w84wo")]([SubResource("Resource_debhb"), SubResource("Resource_hsx0p"), SubResource("Resource_5wkv0")])
+
+[node name="EnemyWalker4" parent="." instance=ExtResource("18_jqyoo")]
+position = Vector2(0, 896)
+skin = "Wasp"
+behaviors = Array[ExtResource("7_w84wo")]([SubResource("Resource_k5nq5"), SubResource("Resource_6phlr"), SubResource("Resource_ctd1w")])
+
+[node name="ResetTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="body_entered" from="Player/JumpAttackWeapon" to="Player" method="_on_jump_attack_weapon_body_entered"]
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timeout"]
+[connection signal="timeout" from="WaveTimer" to="." method="_on_wave_timer_timeout"]
+[connection signal="timeout" from="ResetTimer" to="." method="_on_reset_timer_timeout"]
+
+[editable path="WorldEnvironment"]

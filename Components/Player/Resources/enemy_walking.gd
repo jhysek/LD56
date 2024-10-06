@@ -12,7 +12,7 @@ func on_ready(parent):
 	character = parent
 
 func on_physics_process(delta):
-	if !enabled:
+	if !enabled or !is_instance_valid(character):
 		return
 
 	character.grounded = character.is_on_floor() or FLYING

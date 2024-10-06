@@ -18,6 +18,7 @@ enabled = true
 script = ExtResource("5_1n2vj")
 SHOOTING_UP = false
 SHOOTING_DOWN = true
+EXPLODING = false
 delay = 2.5
 enabled = true
 

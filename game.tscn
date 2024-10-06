@@ -126,6 +126,7 @@ resource_name = "shoot"
 script = ExtResource("19_mcxug")
 SHOOTING_UP = true
 SHOOTING_DOWN = false
+EXPLODING = false
 delay = 2.5
 enabled = true
 
